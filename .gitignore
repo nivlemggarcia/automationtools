@@ -17,3 +17,7 @@
 /**/.settings/**
 /**/.project
 /**/.classpath
+
+# Others #
+/**/config/**
+/**/backup/**
