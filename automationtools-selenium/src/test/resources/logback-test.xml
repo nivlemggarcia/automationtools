@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration debug="false">
 
-	<property name="LOGS_DIR" value="C:/Users/IBM_ADMIN/Workspace/Personal/Java Projects/automationtools/automationtools-soapui/logs" />
-	<!--
-	<statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener" />
-	-->
- 	
+	<property resource="config/config.properties" />
+
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
 			<Pattern>%level [%logger{0}] - %msg%n</Pattern>
@@ -20,7 +17,7 @@
 	
 		<sift>
 			<appender name="FILE-${id}" class="ch.qos.logback.core.FileAppender">
-				<file>${LOGS_DIR}/${id}.log</file>
+				<file>${log.directory}/${id}.log</file>
 				<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
 					<Pattern>%date{ISO8601} %level [%logger{0}] - %msg%n</Pattern>
 				</encoder>
@@ -50,10 +47,10 @@
 	</appender>
 	
 	<appender name="automationtools.dailyrolling.file" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>${LOGS_DIR}/automationtools.log</file>
+		<file>${log.directory}/automationtools.log</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
 			<!-- daily rollover -->
-			<fileNamePattern>${LOGS_DIR}/automationtools.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+			<fileNamePattern>${log.directory}/automationtools.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
 			<!-- 
 				each file should be at most 100MB, 
 				keep 7 days worth of history capped at 1GB total size 
@@ -69,10 +66,10 @@
 	</appender>
 	
 	<appender name="springframework.dailyrolling.file" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>${LOGS_DIR}/springframework.log</file>
+		<file>${log.directory}/springframework.log</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
 			<!-- daily rollover -->
-			<fileNamePattern>${LOGS_DIR}/springframework.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+			<fileNamePattern>${log.directory}/springframework.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
 			<!-- 
 				each file should be at most 100MB, 
 				keep 7 days worth of history capped at 1GB total size 
@@ -88,10 +85,10 @@
 	</appender>
 	
 	<appender name="hikari.dailyrolling.file" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>${LOGS_DIR}/hikari.log</file>
+		<file>${log.directory}/hikari.log</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
 			<!-- daily rollover -->
-			<fileNamePattern>${LOGS_DIR}/hikari.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+			<fileNamePattern>${log.directory}/hikari.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
 			<!-- 
 				each file should be at most 100MB, 
 				keep 7 days worth of history capped at 1GB total size 
@@ -107,10 +104,10 @@
 	</appender>
 	
 	<appender name="soapui.dailyrolling.file" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>${LOGS_DIR}/soapui.log</file>
+		<file>${log.directory}/soapui.log</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
 			<!-- daily rollover -->
-			<fileNamePattern>${LOGS_DIR}/soapui.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+			<fileNamePattern>${log.directory}/soapui.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
 			<!-- 
 				each file should be at most 100MB, 
 				keep 7 days worth of history capped at 1GB total size 

@@ -14,7 +14,7 @@
 	
 	<context:annotation-config />
 	<context:component-scan base-package="com.automationtools.web"/>
-	<context:property-placeholder location="classpath:config.properties"/>
+	<context:property-placeholder location="classpath:/config/config.properties"/>
 	
 	<mvc:annotation-driven>
 		<mvc:message-converters>
