@@ -1,4 +1,4 @@
-package com.automationtools.core.support;
+package com.automationtools.core;
 
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.concurrent.TimeUnit.MINUTES;
@@ -8,9 +8,6 @@ import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import com.automationtools.core.Status;
-import com.automationtools.core.Task;
-import com.automationtools.core.TaskHandler;
 
 /**
  * This aspect intercepts {@linkplain TaskHandler#apply(Task)} 

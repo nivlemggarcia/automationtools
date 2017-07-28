@@ -1,5 +1,6 @@
 package com.automationtools.core;
 
+import java.io.Serializable;
 import java.util.function.Function;
 
 import com.automationtools.exception.ExecutionFailedException;
@@ -21,7 +22,7 @@ import com.automationtools.exception.ExecutionFailedException;
  * @since 	1.0.0
  */
 @FunctionalInterface
-public interface TaskHandler<T, R> extends Function<Task<T>, Result<R>> {
+public interface TaskHandler<T extends Serializable, R> extends Function<Task<T>, R> {
 	
 	/**
 	 * Performs this function to the given argument.
@@ -29,11 +30,9 @@ public interface TaskHandler<T, R> extends Function<Task<T>, Result<R>> {
 	public abstract R handle(T t) throws Exception;
 	
 	@Override
-	public default Result<R> apply(Task<T> t) {
+	public default R apply(Task<T> t) {
 		try {
-			R value = handle(t.getData());
-			/* Wrap the return value with Result object */
-			return new Result<>(t.getId(), value);
+			return handle(t.getData());
 		} catch (Throwable throwable) {
 			throw new ExecutionFailedException(
 					String.format("Failed with [%s]", throwable.getMessage()), throwable);

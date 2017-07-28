@@ -1,6 +1,9 @@
 package com.automationtools.core;
 
 import static org.springframework.util.Assert.*;
+
+import java.io.Serializable;
+
 import org.springframework.beans.factory.annotation.Required;
 import com.automationtools.core.TaskHandler;
 import com.automationtools.core.support.ExpressionEvaluationSupport;
@@ -14,7 +17,7 @@ import com.automationtools.exception.ExecutionFailedException;
  * @param <T>
  * 			Execution context type
  */
-public class ExpressionEvaluatingHandler<T, R> extends TaskHandlerDecorator<T, R> {
+public class ExpressionEvaluatingHandler<T extends Serializable, R> extends TaskHandlerDecorator<T, R> {
 	
 	/**
 	 * The expression evaluator

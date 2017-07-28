@@ -1,11 +1,11 @@
-package com.automationtools.core.support;
+package com.automationtools.core;
 
 import java.util.Set;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Value;
-import com.automationtools.core.Task;
+
 import com.automationtools.core.listener.AbstractTaskListener;
 
 @Aspect

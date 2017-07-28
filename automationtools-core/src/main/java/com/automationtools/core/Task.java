@@ -1,6 +1,7 @@
 package com.automationtools.core;
 
 import static org.springframework.util.Assert.*;
+import java.io.Serializable;
 import java.util.Observable;
 import java.util.UUID;
 import com.automationtools.util.CreateUuid;
@@ -14,7 +15,7 @@ import com.automationtools.util.CreateUuid;
  *
  * @param <T> The type of the wrapped object.
  */
-public class Task<T> extends Observable {
+public class Task<T extends Serializable> extends Observable {
 	
 	/**
 	 * Unique identifier for this {@code Task}.
@@ -57,7 +58,7 @@ public class Task<T> extends Observable {
 	 * @param <T> The type of the wrapped object.
 	 * @return		A new instance of {@code Task}.
 	 */
-	public static <T> Task<T> wrap(T data) {
+	public static <T extends Serializable> Task<T> wrap(T data) {
 		return new Task<>(data);
 	}
 	
@@ -71,7 +72,7 @@ public class Task<T> extends Observable {
 	/**
 	 * Sets the execution status.
 	 */
-	public void setStatus(Status status) {
+	protected void setStatus(Status status) {
 		Status oldStatus = this.status;
 		this.status = status;
 		setChanged();
@@ -92,7 +93,7 @@ public class Task<T> extends Observable {
 	 * Sets the amount of time (in millis) that 
 	 * passes from before and after the execution.
 	 */
-	public void setTimeElapsed(long timeElapsed) {
+	protected void setTimeElapsed(long timeElapsed) {
 		this.timeElapsed = timeElapsed;
 	}
 
@@ -106,7 +107,7 @@ public class Task<T> extends Observable {
 	/**
 	 * Sets the exception thrown during execution.
 	 */
-	public void setFailureCause(Exception failureCause) {
+	protected void setFailureCause(Exception failureCause) {
 		this.failureCause = failureCause;
 	}
 	
@@ -120,7 +121,7 @@ public class Task<T> extends Observable {
 	/**
 	 * Sets the wrapped data object.
 	 */
-	public void setData(T data) {
+	protected void setData(T data) {
 		notNull(data, "Data cannot be null");
 		this.data = data;
 	}

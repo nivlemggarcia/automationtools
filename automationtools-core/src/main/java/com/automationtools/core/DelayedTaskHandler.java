@@ -1,6 +1,8 @@
 package com.automationtools.core;
 
 import static org.springframework.util.Assert.*;
+
+import java.io.Serializable;
 import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +23,7 @@ import com.automationtools.exception.ExecutionFailedException;
  * @see		ExecutorDecorator
  * @since 	1.0.0
  */
-public class DelayedTaskHandler<T, R> extends TaskHandlerDecorator<T, R> {
+public class DelayedTaskHandler<T extends Serializable, R> extends TaskHandlerDecorator<T, R> {
 	
 	private static final Logger log = LoggerFactory.getLogger(DelayedTaskHandler.class);
 	

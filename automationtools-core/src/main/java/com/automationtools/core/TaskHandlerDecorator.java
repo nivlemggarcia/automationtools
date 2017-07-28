@@ -1,6 +1,9 @@
 package com.automationtools.core;
 
 import static org.springframework.util.Assert.*;
+
+import java.io.Serializable;
+
 import com.automationtools.exception.ExecutionFailedException;
 
 /**
@@ -12,7 +15,7 @@ import com.automationtools.exception.ExecutionFailedException;
  * 
  * @param <T> 	Execution context type
  */
-public class TaskHandlerDecorator<T, R> implements TaskHandler<T, R> {
+public class TaskHandlerDecorator<T extends Serializable, R> implements TaskHandler<T, R> {
 
 	/**
 	 * The wrapped instance

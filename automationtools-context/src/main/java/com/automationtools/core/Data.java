@@ -3,6 +3,7 @@ package com.automationtools.core;
 import static org.springframework.util.Assert.*;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.nio.charset.Charset;
 import java.util.Arrays;
 import org.springframework.util.StreamUtils;
@@ -13,7 +14,12 @@ import org.springframework.util.StreamUtils;
  * @author Melvin Garcia
  * @since 1.0.0
  */
-public class Data {
+public class Data implements Serializable {
+
+	/**
+	 * Generated serialVersionUID
+	 */
+	private static final long serialVersionUID = 4134084465678410988L;
 
 	/**
 	 * The raw content.
@@ -23,7 +29,7 @@ public class Data {
 	/**
 	 * Used to decode the content.
 	 */
-	private Charset charset = Charset.defaultCharset();
+	private String charset = Charset.defaultCharset().toString();
 	
 	/**
 	 * Constructor that accepts a source of <strong>raw content</strong>.
@@ -116,7 +122,7 @@ public class Data {
 	 */
 	protected void setContent(String content) {
 		notNull(content, "Raw content cannot be null");
-		this.content = content.getBytes(charset);
+		this.content = content.getBytes(Charset.forName(charset));
 	}
 	
 	/**
@@ -124,7 +130,7 @@ public class Data {
 	 * that is used for decoding the {@code bytes}.
 	 */
 	public Charset getCharset() {
-		return charset;
+		return Charset.forName(charset);
 	}
 	
 	/**
@@ -132,7 +138,7 @@ public class Data {
 	 * that will be used for decoding the {@code bytes}.
 	 */
 	protected void setCharset(Charset charset) {
-		this.charset = charset;
+		this.charset = charset.toString();
 	}
 	
 	/**
@@ -140,7 +146,7 @@ public class Data {
 	 */
 	public Data copy() {
 		byte[] newContent = Arrays.copyOf(content, content.length);
-		return Data.create(newContent, charset);
+		return Data.create(newContent, Charset.forName(charset));
 	}
 	
 	/**
@@ -155,7 +161,7 @@ public class Data {
 	 */
 	@Override
 	public String toString() {
-		return new String(content, charset);
+		return new String(content, Charset.forName(charset));
 	}
 	
 }

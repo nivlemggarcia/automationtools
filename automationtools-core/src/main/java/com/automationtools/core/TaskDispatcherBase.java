@@ -1,6 +1,7 @@
 package com.automationtools.core;
 
 import static org.springframework.util.Assert.*;
+import java.io.Serializable;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 import org.springframework.beans.factory.annotation.Required;
@@ -31,7 +32,7 @@ public abstract class TaskDispatcherBase implements TaskDispatcher {
 	 * @param handler
 	 * @return
 	 */
-	protected <T, R> Callable<R> newCommand(Task<T> task, TaskHandler<T, R> consumer) {
+	protected <T extends Serializable, R> Callable<R> newCommand(Task<T> task, TaskHandler<T, R> consumer) {
 		return new Command<T, R>(task, consumer);
 	}
 	
@@ -39,7 +40,7 @@ public abstract class TaskDispatcherBase implements TaskDispatcher {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <T, R> Future<R> dispatch(Task<T> task) throws NoSuitableHandlerFoundException {
+	public <T extends Serializable, R> Future<R> dispatch(Task<T> task) throws NoSuitableHandlerFoundException {
 		notNull(task, "Cannot dispatch a null Task");
 		state(factory != null, "HandlerFactory cannot be null.");
 		
@@ -71,7 +72,7 @@ public abstract class TaskDispatcherBase implements TaskDispatcher {
 	 * @since 1.0.0
 	 * @param <T>
 	 */
-	class Command<T, R> implements Callable<R> {
+	class Command<T extends Serializable, R> implements Callable<R> {
 		
 		protected Task<T> task;
 		
@@ -84,7 +85,7 @@ public abstract class TaskDispatcherBase implements TaskDispatcher {
 		
 		@Override
 		public R call() throws Exception {
-			return consumer.apply(task).getData();
+			return consumer.apply(task);
 		}
 
 	}

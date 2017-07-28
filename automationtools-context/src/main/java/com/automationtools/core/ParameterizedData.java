@@ -11,6 +11,11 @@ import java.util.Properties;
 public class ParameterizedData extends Data {
 	
 	/**
+	 * Generated serialVersionUID
+	 */
+	private static final long serialVersionUID = 8230862167033974090L;
+
+	/**
 	 * The <strong>raw content</strong>.
 	 */
 	private Data data;
