@@ -1,8 +1,6 @@
 package com.automationtools.core;
 
 import static org.springframework.util.Assert.*;
-
-import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 import org.springframework.beans.factory.annotation.Required;
