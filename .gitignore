@@ -13,13 +13,12 @@
 *.rar
 
 # eclipse #
-/.settings/**
-/**/target/**
-/**/.settings/**
-/**/.project
-/**/.classpath
+target/
+.settings/
+.project
+.classpath
 
 # Others #
-/**/config/**
-/**/backup/**
-/**/logs/**
+config/
+backup/
+logs/
