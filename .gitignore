@@ -13,6 +13,7 @@
 *.rar
 
 # eclipse #
+/.settings/**
 /**/target/**
 /**/.settings/**
 /**/.project
