@@ -23,18 +23,16 @@ public class SoapuiDataParser implements Parser<SoapuiData> {
 	 */
 	@Override
 	public SoapuiData parse(byte[] arg) throws ParsingFailedException {
-		/* Parse argument as WsdlProject. This will throw 
-		 * an exception when parsing-related error occurred.  
-		 */
 		try {
+			/* Parse argument as WsdlProject. This will throw 
+			 * an exception when parsing-related error occurred. */
 			new WsdlProject().loadProjectFromInputStream(new ByteArrayInputStream(arg));
 		} catch (Throwable t) {
 			throw new ParsingFailedException(t.getMessage(), t);
 		}
 		
 		/* At this point, it is safe to say that the argument 
-		 * is a valid SoapUI project 
-		 */
+		 * is a valid SoapUI project */
 		return SoapuiData.create(arg);
 	}
 

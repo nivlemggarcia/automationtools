@@ -31,6 +31,9 @@ public class SoapuiTaskHandler implements TaskHandler<SoapuiData, Collection<Str
 	
 	protected static final Logger log = LoggerFactory.getLogger(SoapuiTaskHandler.class);
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Collection<String> handle(SoapuiData data) throws Exception {
 		boolean successful = true;

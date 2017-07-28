@@ -19,7 +19,7 @@ import com.eviware.soapui.support.UISupport;
 
 /**
  * This implementation is directly copied from SoapUI's 
- * {@link WsdlProject#saveIn(java.io.File)} code in order to 
+ * {@link WsdlProject#saveIn(java.io.File)} in order to 
  * implement {@link #save(OutputStream)}.
  * 
  * @author 	Melvin Garcia

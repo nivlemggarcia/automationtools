@@ -14,7 +14,7 @@ import com.automationtools.exception.ExecutionFailedException;
  * @param <T>
  * 			Execution context type
  */
-public class ExpressionEvaluatingHandler<T, R> extends HandlerDecorator<T, R> {
+public class ExpressionEvaluatingHandler<T, R> extends TaskHandlerDecorator<T, R> {
 	
 	/**
 	 * The expression evaluator
