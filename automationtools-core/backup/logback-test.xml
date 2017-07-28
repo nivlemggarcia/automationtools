@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="true">
+
+	<statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener" />
+ 	
+	<appender name="consoleAppender" class="ch.qos.logback.ext.spring.DelegatingLogbackAppender"/>
+	
+	<appender name="discriminatedFileAppender" class="ch.qos.logback.ext.spring.DelegatingLogbackAppender"/>
+	
+	<root level="debug">
+		<appender-ref ref="consoleAppender" />
+	</root>
+
+</configuration>

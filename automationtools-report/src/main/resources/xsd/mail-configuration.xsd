@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://sprint.automationtools.com/configuration/mail-configuration.xsd" targetNamespace="http://sprint.automationtools.com/configuration/mail-configuration.xsd" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="mail-configuration" type="tns:MailConfigurationType"/>
+	<xs:complexType name="MailConfigurationType">
+		<xs:all>
+			<xs:element name="connection" type="tns:ConnectionType"/>
+			<xs:element name="properties" type="tns:PropertiesType" minOccurs="0"/>
+			<xs:element name="from" type="tns:EmailAddressType"/>
+			<xs:element name="to" type="tns:AddressesType"/>
+			<xs:element name="cc" type="tns:AddressesType" minOccurs="0"/>
+			<xs:element name="bcc" type="tns:AddressesType" minOccurs="0"/>
+			<xs:element name="subject" type="xs:string"/>
+			<xs:element name="content" type="xs:string"/>
+		</xs:all>
+		<xs:attribute name="debug" type="xs:boolean"/>
+	</xs:complexType>
+	<xs:complexType name="AddressesType">
+		<xs:sequence>
+			<xs:element name="address" type="tns:EmailAddressType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PropertiesType">
+		<xs:sequence>
+			<xs:element name="property" type="tns:PropertyType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ConnectionType">
+		<xs:all>
+			<xs:element name="host" type="xs:string"/>
+			<xs:element name="port" type="xs:integer"/>
+			<xs:element name="username" type="xs:string" minOccurs="0"/>
+			<xs:element name="password" type="xs:string" minOccurs="0"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="PropertyType">
+		<xs:attribute name="key" type="xs:string" use="required"/>
+		<xs:attribute name="value" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:simpleType name="EmailAddressType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[^@]+@[^\.]+\..+"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

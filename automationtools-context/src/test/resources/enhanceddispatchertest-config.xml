@@ -1,0 +1,50 @@
+<beans:beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+	
+	<beans:bean id="dispatcher" class="com.automationtools.core.ExecutorBackedTaskDispatcher">
+		<beans:property name="executor" value="#{T(java.util.concurrent.Executors).newSingleThreadExecutor()}"/>
+		<beans:property name="factory" ref="enhancedHandlerFactory"/>
+		<beans:property name="discriminated" value="true"/>
+	</beans:bean>
+	
+	<beans:bean id="enhancedHandlerFactory" class="com.automationtools.core.ExpressionEvaluatingHandlerFactory">
+		<beans:constructor-arg>
+			<beans:bean id="enhancedHandlerFactory" class="com.automationtools.core.DefaultTaskHandlerFactory">
+				<beans:property name="mapping">
+					<beans:set>
+						<beans:bean class="com.automationtools.util.KeyValuePair">
+							<beans:property name="key">
+								<beans:value type="java.lang.Class">com.automationtools.core.Data</beans:value>
+							</beans:property>
+							<beans:property name="value" ref="createDataHandler"/>
+						</beans:bean>
+					</beans:set>
+				</beans:property>
+			</beans:bean>
+		</beans:constructor-arg>
+		<beans:property name="evaluator" ref="expressionEvaluator"/>
+	</beans:bean>
+	
+	<beans:bean id="defaultParser" class="org.springframework.expression.spel.standard.SpelExpressionParser" primary="true"/>
+	
+	<beans:bean id="defaultEvaluationContext" class="org.springframework.expression.spel.support.StandardEvaluationContext" scope="prototype" primary="true">
+		<beans:property name="variables">
+			<beans:map>
+				<beans:entry key="SYSDATE">
+					<beans:bean class="com.automationtools.expression.SysdateExpressionEvaluator"/>
+				</beans:entry>
+			</beans:map>
+		</beans:property>
+	</beans:bean>
+	
+	<beans:bean id="expressionEvaluator" class="com.automationtools.core.support.ExpressionEvaluatorFactory">
+		<beans:property name="context" ref="defaultEvaluationContext"/>
+		<beans:property name="parser" ref="defaultParser"/>
+	</beans:bean>
+	
+</beans:beans>

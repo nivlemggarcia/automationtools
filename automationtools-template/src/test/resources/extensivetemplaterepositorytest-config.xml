@@ -1,0 +1,38 @@
+<beans:beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+	
+	<context:property-placeholder location="classpath:test-config.properties"/>
+	
+	<beans:bean id="extensiveTemplateRepository" class="com.automationtools.template.ExtensiveTemplateRepository">
+		<beans:property name="sources" ref="extensiveTemplateRepositorySource"/>
+	</beans:bean>
+	
+	<beans:bean id="extensivePropertiesLookupStrategy" class="com.automationtools.template.ExtensivePropertiesLookupStrategy">
+		<beans:property name="sources" ref="extensivePropertiesLookupStrategySource"/>
+		<beans:property name="defaultLookupStrategy" ref="filePropertiesLookupStrategy"/>
+	</beans:bean>
+	
+	<beans:bean id="fileSystemTemplateRepositoryWithLookup" class="com.automationtools.template.FileSystemTemplateRepository">
+		<beans:property name="sourceDirectory" value="${source.directory}"/>
+		<beans:property name="propertiesLookup" ref="extensivePropertiesLookupStrategy"/>
+		<beans:property name="parser" ref="defaultTemplateDataParser"/>
+	</beans:bean>
+	
+	<beans:bean id="filePropertiesLookupStrategy" class="com.automationtools.template.FilePropertiesLookupStrategy">
+		<beans:property name="sourceDirectory" value="${properties.directory}"/>
+	</beans:bean>
+	
+	<util:set id="extensiveTemplateRepositorySource">
+		<beans:ref bean="fileSystemTemplateRepositoryWithLookup"/>
+	</util:set>
+	
+	<util:set id="extensivePropertiesLookupStrategySource">
+		<beans:ref bean="filePropertiesLookupStrategy"/>
+	</util:set>
+	
+</beans:beans>

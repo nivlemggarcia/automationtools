@@ -1,0 +1,35 @@
+<beans:beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+	
+	<context:property-placeholder location="classpath:test-config.properties"/>
+	
+	<beans:bean id="dispatcher" class="com.automationtools.core.ExecutorBackedTaskDispatcher" destroy-method="shutdown">
+		<beans:property name="executor" value="#{T(java.util.concurrent.Executors).newSingleThreadExecutor()}"/>
+		<beans:property name="factory" ref="defaultHandlerFactory"/>
+		<beans:property name="discriminated" value="true"/>
+	</beans:bean>
+	
+	<beans:bean id="defaultHandlerFactory" class="com.automationtools.core.DefaultTaskHandlerFactory">
+		<beans:property name="mapping">
+			<beans:set>
+				<beans:bean class="com.automationtools.util.KeyValuePair">
+					<beans:property name="key">
+						<beans:value type="java.lang.Class">com.automationtools.soapui.SoapuiData</beans:value>
+					</beans:property>
+					<beans:property name="value" ref="soapuiTaskHandler"/>
+				</beans:bean>
+			</beans:set>
+		</beans:property>
+	</beans:bean>
+	
+	<beans:bean id="fileSystemTemplateRepository" class="com.automationtools.template.FileSystemTemplateRepository" init-method="reload">
+		<beans:property name="sourceDirectory" value="${source.directory}"/>
+		<beans:property name="parser" ref="createParser"/>
+	</beans:bean>
+	
+</beans:beans>

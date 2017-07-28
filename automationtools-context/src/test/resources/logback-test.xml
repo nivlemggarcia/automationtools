@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false">
+
+	<property name="LOGS_DIR" value="C:/Users/IBM_ADMIN/Workspace/Personal/Java Projects/automationtools/automationtools-context/logs" />
+	<!--
+	<statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener" />
+	-->
+ 	
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<Pattern>%level [%logger{0}] - %msg%n</Pattern>
+		</encoder>
+	</appender>
+	
+	<appender name="id.sifting.file" class="ch.qos.logback.classic.sift.SiftingAppender">
+		<discriminator>
+			<key>id</key>
+			<defaultValue>unknown</defaultValue>
+		</discriminator>
+	
+		<sift>
+			<appender name="FILE-${id}" class="ch.qos.logback.core.FileAppender">
+				<file>${LOGS_DIR}/${id}.log</file>
+				<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+					<Pattern>%date{ISO8601} %level [%logger{0}] - %msg%n</Pattern>
+				</encoder>
+			</appender>
+		</sift>
+	</appender>
+	
+	<appender name="id.sifting.db" class="ch.qos.logback.classic.sift.SiftingAppender">
+		<discriminator>
+			<key>id</key>
+			<defaultValue>unknown</defaultValue>
+		</discriminator>
+
+		<sift>
+			<appender name="DB" class="ch.qos.logback.classic.db.DBAppender">
+				<connectionSource class="ch.qos.logback.core.db.DataSourceConnectionSource">
+					<dataSource class="com.zaxxer.hikari.HikariDataSource">
+						<driverClassName>com.mysql.cj.jdbc.Driver</driverClassName>
+						<jdbcUrl>jdbc:mysql://localhost:3344/automationtools?useSSL=false</jdbcUrl>
+						<username>automationtoolsuser</username>
+						<password>password</password>
+						<maximumPoolSize>10</maximumPoolSize>
+					</dataSource>
+				</connectionSource>
+			</appender>
+		</sift>
+	</appender>
+	
+	<appender name="automationtools.dailyrolling.file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOGS_DIR}/automationtools.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<!-- daily rollover -->
+			<fileNamePattern>${LOGS_DIR}/automationtools.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+			<!-- 
+				each file should be at most 100MB, 
+				keep 7 days worth of history capped at 1GB total size 
+			-->
+			<maxFileSize>100MB</maxFileSize>
+			<maxHistory>7</maxHistory>
+			<totalSizeCap>1GB</totalSizeCap>
+		</rollingPolicy>
+    
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<Pattern>%date{ISO8601} %level [%logger{0}] - %msg%n</Pattern>
+		</encoder>
+	</appender>
+	
+	<appender name="springframework.dailyrolling.file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOGS_DIR}/springframework.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<!-- daily rollover -->
+			<fileNamePattern>${LOGS_DIR}/springframework.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+			<!-- 
+				each file should be at most 100MB, 
+				keep 7 days worth of history capped at 1GB total size 
+			-->
+			<maxFileSize>100MB</maxFileSize>
+			<maxHistory>7</maxHistory>
+			<totalSizeCap>1GB</totalSizeCap>
+		</rollingPolicy>
+    
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<Pattern>%date{ISO8601} %level [%logger{0}] - %msg%n</Pattern>
+		</encoder>
+	</appender>
+	
+	<appender name="hikari.dailyrolling.file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOGS_DIR}/hikari.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<!-- daily rollover -->
+			<fileNamePattern>${LOGS_DIR}/hikari.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+			<!-- 
+				each file should be at most 100MB, 
+				keep 7 days worth of history capped at 1GB total size 
+			-->
+			<maxFileSize>100MB</maxFileSize>
+			<maxHistory>7</maxHistory>
+			<totalSizeCap>1GB</totalSizeCap>
+		</rollingPolicy>
+    
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<Pattern>%date{ISO8601} %level [%logger{0}] - %msg%n</Pattern>
+		</encoder>
+	</appender>
+	
+	<logger name="org.springframework" level="debug" additivity="false">
+		<appender-ref ref="springframework.dailyrolling.file" />
+	</logger>
+	
+	<logger name="com.zaxxer.hikari" level="debug" additivity="false">
+		<appender-ref ref="hikari.dailyrolling.file" />
+	</logger>
+	
+	<logger name="com.automationtools" level="debug" additivity="false">
+		<appender-ref ref="id.sifting.file" />
+		<appender-ref ref="id.sifting.db" />
+		<appender-ref ref="automationtools.dailyrolling.file" />
+	</logger>
+	
+	<root level="debug">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="automationtools.dailyrolling.file" />
+	</root>
+
+</configuration>

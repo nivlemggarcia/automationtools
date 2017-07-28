@@ -1,0 +1,38 @@
+<beans:beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+	
+	<beans:bean class="ch.qos.logback.ext.spring.ApplicationContextHolder"/>
+	
+	<beans:bean id="consoleAppender" class="ch.qos.logback.core.ConsoleAppender" init-method="start" destroy-method="stop">
+		<beans:property name="context" value="#{T(org.slf4j.LoggerFactory).getILoggerFactory()}"/>
+		<beans:property name="encoder">
+			<beans:bean class="ch.qos.logback.classic.encoder.PatternLayoutEncoder" init-method="start" destroy-method="stop">
+                <beans:property name="context" value="#{T(org.slf4j.LoggerFactory).getILoggerFactory()}"/>
+                <beans:property name="pattern" value="%level [%logger{0}] - %msg%n"/>
+            </beans:bean>
+		</beans:property>
+	</beans:bean>
+	
+	<beans:bean id="discriminatedFileAppender" class="ch.qos.logback.classic.sift.SiftingAppender" init-method="start" destroy-method="stop">
+		<beans:property name="context" value="#{T(org.slf4j.LoggerFactory).getILoggerFactory()}"/>
+		<beans:property name="discriminator">
+			<beans:bean class="ch.qos.logback.classic.sift.MDCBasedDiscriminator" init-method="start" destroy-method="stop">
+				<beans:property name="context" value="#{T(org.slf4j.LoggerFactory).getILoggerFactory()}"/>
+                <beans:property name="key" value="id"/>
+                <beans:property name="defaultValue" value="unknown"/>
+            </beans:bean>
+		</beans:property>
+		<beans:property name="encoder">
+			<beans:bean class="ch.qos.logback.classic.encoder.PatternLayoutEncoder" init-method="start" destroy-method="stop">
+                <beans:property name="context" value="#{T(org.slf4j.LoggerFactory).getILoggerFactory()}"/>
+                <beans:property name="pattern" value="%level [%logger{0}] - %msg%n"/>
+            </beans:bean>
+		</beans:property>
+	</beans:bean>
+	
+</beans:beans>

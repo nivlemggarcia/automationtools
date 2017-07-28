@@ -1,0 +1,18 @@
+package com.automationtools.core;
+
+import com.automationtools.exception.NoSuitableHandlerFoundException;
+
+/**
+ * 
+ * @author 	Melvin Garcia
+ * @since 	1.0.0
+ */
+public interface TaskHandlerFactory {
+
+	/**
+	 * Returns the {@linkplain TaskHandler consumer} for
+	 * the given {@code Task}. 
+	 */
+	public <T, R> TaskHandler<T, R> get(Task<T> task) throws NoSuitableHandlerFoundException;
+	
+}

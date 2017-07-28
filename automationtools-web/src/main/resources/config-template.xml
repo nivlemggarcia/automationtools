@@ -1,0 +1,33 @@
+<beans:beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+	
+	
+	<beans:bean id="defaultTemplateRepository" class="com.automationtools.template.DefaultTemplateRepository" primary="true" init-method="reload">
+		<beans:property name="sources" ref="templateSources"/>
+	</beans:bean>
+	
+	<util:set id="templateSources">
+		<beans:bean class="com.automationtools.template.FileSystemTemplateRepository">
+			<beans:property name="sourceDirectory" value="${source.directory}"/>
+			<beans:property name="parser" ref="defaultParser"/>
+		</beans:bean>
+	</util:set>
+	
+	<beans:bean id="defaultParser" class="com.automationtools.template.ChainedParser" factory-method="create">
+		<beans:constructor-arg>
+			<beans:set>
+				<beans:bean class="com.automationtools.soapui.SoapuiDataParser"/>
+			</beans:set>
+		</beans:constructor-arg>
+	</beans:bean>
+	
+</beans:beans>
