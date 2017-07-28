@@ -10,8 +10,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import com.automationtools.core.Status;
 import com.automationtools.core.Task;
+import com.automationtools.core.TaskHandler;
 
 /**
+ * This aspect intercepts {@linkplain TaskHandler#apply(Task)} 
+ * and does all the default logging and {@code Task}'s 
+ * {@linkplain Task#setStatus(Status) status manipulations}.
  * 
  * @author Melvin Garcia
  * @since 1.0.0

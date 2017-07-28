@@ -21,11 +21,6 @@ public abstract class TaskDispatcherBase implements TaskDispatcher {
 	private TaskHandlerFactory factory;
 	
 	/**
-	 * Change listeners for the dispatched {@code Task}s.
-	 */
-	private Set<AbstractTaskObserver> taskObservers;
-	
-	/**
 	 * Executes submitted {@link Callable} tasks.
 	 * 
 	 * @param command	Callable task subject for execution.
@@ -53,11 +48,6 @@ public abstract class TaskDispatcherBase implements TaskDispatcher {
 		/* Get appropriate TaskHandler based on the type of data 
 		 * that this Task holds. */
 		TaskHandler<T, R> consumer = factory.get(task);
-		
-		/* Start listening to Task events */
-		if(hasObservers())
-			taskObservers.forEach((o) -> o.registerTo(task));
-		
 		return execute(newCommand(task, consumer));
 	}
 	
@@ -75,27 +65,6 @@ public abstract class TaskDispatcherBase implements TaskDispatcher {
 	 */
 	public TaskHandlerFactory getFactory() {
 		return factory;
-	}
-	
-	/**
-	 * Sets the listeners for the dispatched {@code Task}s.
-	 */
-	public void setTaskObservers(Set<AbstractTaskObserver> taskObservers) {
-		this.taskObservers = taskObservers;
-	}
-	
-	/**
-	 * Returns the listeners for the dispatched {@code Task}s.
-	 */
-	public Set<AbstractTaskObserver> getTaskObservers() {
-		return taskObservers;
-	}
-	
-	/**
-	 * Checks if there are {@code Task} {@code Observers}.
-	 */
-	protected boolean hasObservers() {
-		return taskObservers != null && !taskObservers.isEmpty();
 	}
 	
 	/**

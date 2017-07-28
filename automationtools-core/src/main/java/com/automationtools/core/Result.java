@@ -2,6 +2,12 @@ package com.automationtools.core;
 
 import java.util.UUID;
 
+/**
+ * 
+ * @author 	Melvin Garcia
+ * @since	1.0.0
+ * @param <T>
+ */
 public class Result<T> {
 	
 	private T data;
