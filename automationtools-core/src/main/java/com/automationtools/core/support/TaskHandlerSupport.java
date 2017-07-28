@@ -22,7 +22,7 @@ public class TaskHandlerSupport {
 	
 	private static final Logger log = LoggerFactory.getLogger(TaskHandlerSupport.class);
 	
-	@Around("execution(* com.automationtools.core.TaskHandler+.handle(..)) && args(arg)")
+	@Around("execution(* com.automationtools.core.TaskHandler+.apply(..)) && args(arg)")
 	public Object around(ProceedingJoinPoint pjp, Task<?> arg) throws Throwable {
 		log.info("Execution Started [{}]", arg.getId().toString());
 		

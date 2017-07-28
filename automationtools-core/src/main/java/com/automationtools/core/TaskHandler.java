@@ -20,15 +20,16 @@ import com.automationtools.exception.ExecutionFailedException;
  * @author 	Melvin Garcia
  * @since 	1.0.0
  */
+@FunctionalInterface
 public interface TaskHandler<T, R> extends Function<Task<T>, Result<R>> {
 	
 	/**
 	 * Performs this function to the given argument.
 	 */
-	abstract R handle(T t) throws Exception;
+	public abstract R handle(T t) throws Exception;
 	
 	@Override
-	default Result<R> apply(Task<T> t) {
+	public default Result<R> apply(Task<T> t) {
 		try {
 			R value = handle(t.getData());
 			/* Wrap the return value with Result object */
