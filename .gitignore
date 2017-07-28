@@ -18,7 +18,10 @@ target/
 .project
 .classpath
 
-# Others #
+# Project-specific ignores #
 config/
 backup/
 logs/
+templates/
+properties/
+test/
