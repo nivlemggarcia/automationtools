@@ -1,4 +1,4 @@
-package com.automationtools.web;
+package com.automationtools.services;
 
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,7 +19,7 @@ public class ExecuteScriptService {
 		return null;
 	}
 	
-	public String execute(@RequestBody Data data) {
+	public String execute(@RequestBody Data ... data) {
 		return null;
 	}
 	

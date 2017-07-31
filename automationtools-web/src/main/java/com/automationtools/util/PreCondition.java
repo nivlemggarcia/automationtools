@@ -1,6 +1,6 @@
 package com.automationtools.util;
 
-import com.automationtools.web.exception.ResourceNotFoundException;
+import com.automationtools.exception.ResourceNotFoundException;
 
 public final class PreCondition {
 	

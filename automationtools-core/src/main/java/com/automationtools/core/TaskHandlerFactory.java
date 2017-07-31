@@ -11,7 +11,7 @@ import com.automationtools.exception.NoSuitableHandlerFoundException;
 public interface TaskHandlerFactory {
 
 	/**
-	 * Returns the {@linkplain TaskHandler consumer} for
+	 * Returns the {@linkplain TaskHandler handler} for
 	 * the given {@code Task}. 
 	 */
 	public <T extends Serializable, R> TaskHandler<T, R> get(Task<T> task) throws NoSuitableHandlerFoundException;
