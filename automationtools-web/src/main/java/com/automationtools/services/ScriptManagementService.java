@@ -29,9 +29,9 @@ import com.automationtools.template.Template;
  */
 @RestController
 @RequestMapping("/scripts")
-public class ScriptTemplateProviderService {
+public class ScriptManagementService {
 	
-	private static final Logger log = LoggerFactory.getLogger(ScriptTemplateProviderService.class);
+	private static final Logger log = LoggerFactory.getLogger(ScriptManagementService.class);
 	
 	/**
 	 * 

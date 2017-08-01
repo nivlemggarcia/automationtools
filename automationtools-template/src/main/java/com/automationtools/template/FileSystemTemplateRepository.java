@@ -7,8 +7,6 @@ import static org.apache.commons.io.FileUtils.*;
 import java.io.File;
 import java.io.FileFilter;
 import java.nio.file.Files;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import org.slf4j.Logger;
@@ -41,22 +39,6 @@ public class FileSystemTemplateRepository extends TemplateRepository {
 	 * {@code FileFilter} used for filtering {@code Template} files.
 	 */
 	private FileFilter filter;
-	
-	/**
-	 * Holds the references to all {@code Template} that is 
-	 * stored to this repository. This map uses {@linkplain Key}
-	 * object to define every {@code Template} instance.
-	 */
-	private volatile Map<Key, Template> repository;
-	
-	/**
-	 * Replaces the content of this repository with {@code Template} instances from 
-	 * {@linkplain DefaultTemplateRepository#loadTemplateFromSources() various sources}. 
-	 */
-	@Override
-	public void reload() {
-		this.repository = Collections.unmodifiableMap(loadTemplates());
-	}
 	
 	/**
 	 * Loads all the {@code Template} instances from the {@linkplain #getSourceDirectory() source directory}.
@@ -96,25 +78,6 @@ public class FileSystemTemplateRepository extends TemplateRepository {
 		} finally {
 			readLock().unlock();
 		}
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Collection<Template> getAll() throws Exception {
-		state(repository != null, "Repository not yet initialized");
-		return repository.values();
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Template get(Key arg) throws Exception {
-		notNull(arg, "Key cannot be null");
-		state(repository != null, "Repository not yet initialized");
-		return repository.get(arg);
 	}
 	
 	/**

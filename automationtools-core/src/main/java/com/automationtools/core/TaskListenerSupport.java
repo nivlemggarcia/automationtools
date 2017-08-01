@@ -5,13 +5,12 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Value;
-
 import com.automationtools.core.listener.AbstractTaskListener;
 
 @Aspect
-public class TaskDispatcherSupport {
+public class TaskListenerSupport {
 	
-	@Value("${core.tasklisteners.enable}")
+	@Value("${core.tasklistener.enable}")
 	private boolean enabled;
 	
 	/**
