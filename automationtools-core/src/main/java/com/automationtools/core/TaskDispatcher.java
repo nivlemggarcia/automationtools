@@ -1,6 +1,5 @@
 package com.automationtools.core;
 
-import java.io.Serializable;
 import java.util.concurrent.Future;
 import com.automationtools.exception.NoSuitableHandlerFoundException;
 
@@ -24,6 +23,6 @@ public interface TaskDispatcher {
 	 * 			In a event that this {@code Dispatcher} could not
 	 * 			find suitable {@code TaskHandler} for the given {@code Task}.
 	 */
-	public <T extends Serializable, R> Future<R> dispatch(Task<T> arg) throws NoSuitableHandlerFoundException;
+	public <T, R> Future<R> dispatch(Task<T> arg) throws NoSuitableHandlerFoundException;
 	
 }

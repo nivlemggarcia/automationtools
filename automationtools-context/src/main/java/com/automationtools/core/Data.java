@@ -3,7 +3,6 @@ package com.automationtools.core;
 import static org.springframework.util.Assert.*;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Serializable;
 import java.nio.charset.Charset;
 import java.util.Arrays;
 import org.springframework.util.StreamUtils;
@@ -14,12 +13,7 @@ import org.springframework.util.StreamUtils;
  * @author Melvin Garcia
  * @since 1.0.0
  */
-public class Data implements Serializable {
-
-	/**
-	 * Generated serialVersionUID
-	 */
-	private static final long serialVersionUID = 4134084465678410988L;
+public class Data {
 
 	/**
 	 * The raw content.

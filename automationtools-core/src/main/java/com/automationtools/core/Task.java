@@ -1,7 +1,6 @@
 package com.automationtools.core;
 
 import static org.springframework.util.Assert.*;
-import java.io.Serializable;
 import java.util.Observable;
 import java.util.UUID;
 import com.automationtools.util.CreateUuid;
@@ -15,7 +14,7 @@ import com.automationtools.util.CreateUuid;
  *
  * @param <T> The type of the wrapped object.
  */
-public class Task<T extends Serializable> extends Observable {
+public class Task<T> extends Observable {
 	
 	/**
 	 * Unique identifier for this {@code Task}.
@@ -58,7 +57,7 @@ public class Task<T extends Serializable> extends Observable {
 	 * @param <T> The type of the wrapped object.
 	 * @return		A new instance of {@code Task}.
 	 */
-	public static <T extends Serializable> Task<T> wrap(T data) {
+	public static <T> Task<T> wrap(T data) {
 		return new Task<>(data);
 	}
 	

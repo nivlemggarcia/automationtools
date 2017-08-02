@@ -1,8 +1,6 @@
 package com.automationtools.core;
 
-import java.io.Serializable;
 import java.util.function.Function;
-
 import com.automationtools.exception.ExecutionFailedException;
 
 /**
@@ -22,7 +20,7 @@ import com.automationtools.exception.ExecutionFailedException;
  * @since 	1.0.0
  */
 @FunctionalInterface
-public interface TaskHandler<T extends Serializable, R> extends Function<Task<T>, R> {
+public interface TaskHandler<T, R> extends Function<Task<T>, R> {
 	
 	/**
 	 * Performs this function to the given argument.

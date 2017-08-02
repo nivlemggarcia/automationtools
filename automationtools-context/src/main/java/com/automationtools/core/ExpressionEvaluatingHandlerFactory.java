@@ -1,9 +1,6 @@
 package com.automationtools.core;
 
 import static org.springframework.util.Assert.*;
-
-import java.io.Serializable;
-
 import org.springframework.beans.factory.annotation.Required;
 import com.automationtools.core.support.ExpressionEvaluationSupport;
 import com.automationtools.exception.NoSuitableHandlerFoundException;
@@ -38,7 +35,7 @@ public class ExpressionEvaluatingHandlerFactory implements TaskHandlerFactory {
 	 * <em>expression evaluation capability</em>.
 	 */
 	@Override
-	public <T extends Serializable, R> TaskHandler<T, R> get(Task<T> task) throws NoSuitableHandlerFoundException {
+	public <T, R> TaskHandler<T, R> get(Task<T> task) throws NoSuitableHandlerFoundException {
 		TaskHandler<T, R> handler = wrapped.get(task);
 		/* Decorates Handler with Expression Evaluation capability */
 		handler = new ExpressionEvaluatingHandler<T, R>(handler, evaluator);

@@ -2,7 +2,7 @@ package com.automationtools.soapui;
 
 import java.io.ByteArrayInputStream;
 import com.automationtools.exception.ParsingFailedException;
-import com.automationtools.template.Parser;
+import com.automationtools.parser.Parser;
 import com.eviware.soapui.impl.wsdl.WsdlProject;
 
 /**

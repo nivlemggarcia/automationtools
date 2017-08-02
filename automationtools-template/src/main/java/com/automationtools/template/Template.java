@@ -2,7 +2,6 @@ package com.automationtools.template;
 
 import static org.springframework.util.Assert.*;
 import com.automationtools.core.Data;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * This serves as a data model of a file. 
@@ -23,7 +22,6 @@ public class Template {
 	 * This is where the <strong>raw</strong> data 
 	 * of this {@code Template} came from.
 	 */
-	@JsonIgnore
 	private TemplateRepository source;
 	
 	/**
@@ -115,7 +113,6 @@ public class Template {
 	 * to a place where the data that this {@code Template}
 	 * holds come from.
 	 */
-	@JsonIgnore
 	public TemplateRepository getSource() {
 		return source;
 	}

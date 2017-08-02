@@ -1,8 +1,6 @@
 package com.automationtools.core;
 
 import static org.springframework.util.Assert.*;
-
-import java.io.Serializable;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Required;
 import com.automationtools.exception.NoSuitableHandlerFoundException;
@@ -22,7 +20,7 @@ public class DefaultTaskHandlerFactory implements TaskHandlerFactory {
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public <T extends Serializable, R> TaskHandler<T, R> get(Task<T> task) throws NoSuitableHandlerFoundException {
+	public <T, R> TaskHandler<T, R> get(Task<T> task) throws NoSuitableHandlerFoundException {
 		for(KeyValuePair<Class<?>, TaskHandler<?, ?>> entry : mapping) {
 			/* Checks if the mapped Class matches the type of data that the task has */
 			if(entry.getKey().equals(task.getType()))

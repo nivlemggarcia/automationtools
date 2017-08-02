@@ -9,7 +9,6 @@ import org.springframework.util.StreamUtils;
 import com.automationtools.core.Data;
 import com.automationtools.exception.ParsingFailedException;
 import com.eviware.soapui.impl.wsdl.WsdlProject;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * A type of {@code Data} the represents the SoapUI test suite.
@@ -99,7 +98,6 @@ public class SoapuiData extends Data {
 	/**
 	 * Returns the soapui test suite document.
 	 */
-	@JsonIgnore
 	public WsdlProject getDocument() {
 		if(document == null)
 			/* Parse */

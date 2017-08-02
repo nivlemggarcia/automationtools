@@ -5,57 +5,57 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Required;
 
 /**
- * The class {@code ExtensiveTemplateRepository} is a concrete implementation
- * of {@linkplain Repository} that stores instances of {@code Template}
- * which came from {@linkplain DefaultTemplateRepository#getSources() various sources}. 
+ * The class {@code DefaultTemplateRepository} is a concrete implementation
+ * of {@linkplain Repository} that manages {@code Template} instances
+ * from {@linkplain #getSources() various sources}. 
  * 
  * @author Melvin Garcia
  * @since 1.0.0
  */
-public class DefaultTemplateRepository implements Repository<Key, Template> {
+public class DefaultTemplateRepository implements Repository<Key, Template>, Observer {
 	
 	private static final Logger log = LoggerFactory.getLogger(DefaultTemplateRepository.class);
 	
 	/**
-	 * Holds the references to all {@code Template} that is 
-	 * stored to this repository. This map uses {@linkplain Key}
-	 * object to define every {@code Template} instance.
+	 * Holds the references to all {@code Template}. 
+	 * This map uses {@linkplain Key} object to define 
+	 * every {@code Template} instance.
 	 */
 	private volatile Map<Key, Template> repository;
 	
 	/**
-	 * The sources where this repository gets all the 
-	 * <strong>raw</strong> data of the {@code Template}.
+	 * The sources where this repository gets all 
+	 * {@code Template} <strong>raw</strong> data.
 	 */
 	private Set<TemplateRepository> sources;
 	
 	/**
-	 * The default source where new {@code Template} will be stored.
+	 * The default {@code TemplateRepository} where 
+	 * new {@code Template} will be stored.
 	 */
 	private TemplateRepository defaultSource;
 	
 	/**
-	 * Flag that instructs this {@code Repository} to do a reload
-	 * whenever {@link #create(String, Template) create}, 
-	 * {@link #update(Template) update}, or {@link #delete(Template) delete}
-	 * are invoked. Default value is <em>false</em>.
-	 * <p>
-	 * The intention behind this is to let the client call the {@link #reload() reload}. 
-	 * This is most applicable when multiple entries are to be created, updated, or deleted
-	 * from this {@code Repository}.
-	 * </p>
+	 * Reloads this {@code Repository} whenever a change in state in any of the 
+	 * referenced {@linkplain #getSources() source repository} has been observed.
 	 */
-	private boolean autoReload = false;
+	@Override
+	public void update(Observable o, Object arg) {
+		log.debug("Change detected from {}. Reloading repository ...", o.getClass().getSimpleName());
+		reload();
+	}
 
 	/**
 	 * Replaces the content of this repository with {@code Template} instances from 
-	 * {@linkplain DefaultTemplateRepository#loadTemplateFromSources() various sources}. 
+	 * {@linkplain #loadTemplateFromSources() various sources}. 
 	 */
 	@Override
 	public void reload() {
@@ -125,9 +125,7 @@ public class DefaultTemplateRepository implements Repository<Key, Template> {
 		 * it came from which implements a specific way on how to remove 
 		 * resources.
 		 */
-		boolean deleted = arg.delete();
-		if(autoReload) reload();
-		return deleted;
+		return arg.delete();
 	}
 
 	/**
@@ -141,9 +139,7 @@ public class DefaultTemplateRepository implements Repository<Key, Template> {
 		 * it came from which implements a specific way on how to update 
 		 * resources.
 		 */
-		boolean updated = arg.update();
-		if(autoReload) reload();
-		return updated;
+		return arg.update();
 	}
 	
 	/**
@@ -157,26 +153,25 @@ public class DefaultTemplateRepository implements Repository<Key, Template> {
 			 * registered sources and use that as default */
 			defaultSource = sources.iterator().next();
 		
-		Key key = defaultSource.create(name, arg);
-		if(autoReload) reload();
-		return key;
+		return defaultSource.create(name, arg);
 	}
 	
 	/**
-	 * Sets the sources where all the <strong>raw</strong>
-	 * data of the {@code Template} is stored.
+	 * Sets the sources where all the {@code Template}
+	 * <strong>raw</strong> data are stored.
 	 */
 	@Required
 	public void setSources(Set<TemplateRepository> sources) {
 		notNull(sources, "TemplateRepositories cannot be null");
 		state(!sources.isEmpty(), "TemplateRepositories cannot be empty");
 		this.sources = sources;
+		/* Listens to all referenced repositories */
+		this.sources.forEach((s) -> s.addObserver(this));
 	}
 	
 	/**
-	 * Returns a set of the sources where all the 
-	 * <strong>raw</strong> data of the {@code Templates}
-	 * is stored.
+	 * Returns the sources where all the {@code Template}
+	 * <strong>raw</strong> data are stored.
 	 */
 	public Set<TemplateRepository> getSources() {
 		return sources;
@@ -206,24 +201,4 @@ public class DefaultTemplateRepository implements Repository<Key, Template> {
 		return defaultSource;
 	}
 	
-	/**
-	 * Sets the flag that instructs this {@code Repository} to do a reload
-	 * whenever {@link #create(String, Template) create}, 
-	 * {@link #update(Template) update}, or {@link #delete(Template) delete}
-	 * are invoked. Default value is <em>false</em>.
-	 */
-	public void setAutoReload(boolean autoReload) {
-		this.autoReload = autoReload;
-	}
-	
-	/**
-	 * Returns the flag that instructs this {@code Repository} to do a reload
-	 * whenever {@link #create(String, Template) create}, 
-	 * {@link #update(Template) update}, or {@link #delete(Template) delete}
-	 * are invoked. Default value is <em>false</em>.
-	 */
-	public boolean isAutoReload() {
-		return autoReload;
-	}
-
 }

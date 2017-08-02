@@ -1,8 +1,6 @@
 package com.automationtools.core;
 
 import static org.springframework.util.Assert.*;
-
-import java.io.Serializable;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
@@ -36,7 +34,7 @@ public class ExecutorBackedTaskDispatcher extends TaskDispatcherBase {
 	}
 	
 	@Override
-	protected <T extends Serializable, R> Callable<R> newCommand(Task<T> task, TaskHandler<T, R> handler) {
+	protected <T, R> Callable<R> newCommand(Task<T> task, TaskHandler<T, R> handler) {
 		Callable<R> c = super.newCommand(task, handler);
 		if(isDiscriminated())
 			c =  new MdcAwareCommand<T, R>(c, task.getId().toString());

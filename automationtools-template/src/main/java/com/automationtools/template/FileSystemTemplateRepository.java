@@ -13,7 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Required;
 import com.automationtools.core.Data;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * The class {@code FileSystemTemplateRespository} is a concrete implementation
@@ -43,7 +42,8 @@ public class FileSystemTemplateRepository extends TemplateRepository {
 	/**
 	 * Loads all the {@code Template} instances from the {@linkplain #getSourceDirectory() source directory}.
 	 */
-	protected Map<Key, Template> loadTemplates() {
+	@Override
+	protected Map<Key, Template> load() {
 		state(sourceDirectory != null, "Source directory is null.");
 		File[] files = sourceDirectory.listFiles(filter);
 		if(files.length < 1) {
@@ -89,8 +89,14 @@ public class FileSystemTemplateRepository extends TemplateRepository {
 		try {
 			/* Delete the template file */
 			File f = ((FileTemplateKey) arg.getKey()).getTemplateFile();
-			return Files.deleteIfExists(f.toPath());
+			boolean deleted = Files.deleteIfExists(f.toPath());
+			
+			if(deleted)
+				setChanged();
+			
+			return deleted;
 		} finally {
+			notifyObservers();
 			writeLock().unlock();
 		}
 	}
@@ -105,9 +111,12 @@ public class FileSystemTemplateRepository extends TemplateRepository {
 			/* Update the template file using the FileTemplateKey */
 			File f = ((FileTemplateKey) arg.getKey()).getTemplateFile();
 			Files.write(f.toPath(), arg.getData().getContent());
+			
 			/* Signifies file has been successfully updated */
+			setChanged();
 			return true;
 		} finally {
+			notifyObservers();
 			writeLock().unlock();
 		}
 	}
@@ -126,8 +135,10 @@ public class FileSystemTemplateRepository extends TemplateRepository {
 			writeByteArrayToFile(f, arg.getData().getContent());
 			FileTemplateKey key = new FileTemplateKey(f);
 			arg.setKey(key);
+			setChanged();
 			return key;
 		} finally {
+			notifyObservers();
 			writeLock().unlock();
 		}
 	}
@@ -200,7 +211,6 @@ public class FileSystemTemplateRepository extends TemplateRepository {
 			return getBaseName(templateFile.getName());
 		}
 		
-		@JsonIgnore
 		public File getTemplateFile() {
 			return templateFile;
 		}

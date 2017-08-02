@@ -1,7 +1,7 @@
 package com.automationtools.selenium;
 
 import com.automationtools.exception.ParsingFailedException;
-import com.automationtools.template.Parser;
+import com.automationtools.parser.Parser;
 
 /**
  * The class {@code SeleniumDataParser} translating 
