@@ -191,6 +191,7 @@ public class DefaultTemplateRepository implements Repository<Key, Template>, Obs
 	 */
 	public void setDefaultSource(TemplateRepository defaultSource) {
 		this.defaultSource = defaultSource;
+		this.defaultSource.addObserver(this);
 	}
 	
 	/**
