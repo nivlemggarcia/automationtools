@@ -1,23 +1,17 @@
 package com.automationtools.services;
 
-import static com.automationtools.util.PreCondition.*;
-import java.nio.charset.Charset;
 import java.util.Collection;
 import javax.inject.Inject;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import com.automationtools.core.Data;
 import com.automationtools.exception.ApplicationException;
 import com.automationtools.template.Key;
 import com.automationtools.template.Repository;
@@ -43,8 +37,7 @@ public class ScriptManagementService {
 	/**
 	 * Returns all the {@code Template} instances from the {@code Repository}.
 	 */
-	@RequestMapping(method = RequestMethod.GET, 
-		produces = {
+	@GetMapping(produces = {
 			MediaType.APPLICATION_JSON_VALUE, 
 			MediaType.APPLICATION_XML_VALUE
 		}
@@ -62,7 +55,7 @@ public class ScriptManagementService {
 		if(templates == null || templates.isEmpty())
 			return new ResponseEntity<Collection<Template>>(HttpStatus.NO_CONTENT);
 		
-		return new ResponseEntity<Collection<Template>>(templates, HttpStatus.OK);
+		return new ResponseEntity<>(templates, HttpStatus.OK);
 	}
 	
 	/**
@@ -71,8 +64,7 @@ public class ScriptManagementService {
 	 * 
 	 * @param id	{@code Template} identifier
 	 */
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET, 
-		produces = {
+	@GetMapping(value = "/{id}", produces = {
 			MediaType.APPLICATION_JSON_VALUE, 
 			MediaType.APPLICATION_XML_VALUE
 		}
@@ -88,9 +80,9 @@ public class ScriptManagementService {
 		}
 		
 		if(template == null)
-			return new ResponseEntity<Template>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		
-		return new ResponseEntity<Template>(template, HttpStatus.OK);
+		return new ResponseEntity<>(template, HttpStatus.OK);
 	}
 	
 //	/**

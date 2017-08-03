@@ -5,13 +5,6 @@ import static org.springframework.util.Assert.state;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
-import java.util.Observable;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
-import org.springframework.beans.factory.annotation.Required;
-import com.automationtools.core.Data;
-import com.automationtools.parser.Parser;
 
 /**
  * This serves as the base class of all {@code Repository} 
@@ -20,17 +13,7 @@ import com.automationtools.parser.Parser;
  * @author 	Melvin Garcia
  * @since 	1.0.0
  */
-public abstract class TemplateRepository extends Observable implements Repository<Key, Template> {
-	
-	/**
-	 * 
-	 */
-	protected Parser<? extends Data> parser;
-	
-	/**
-	 * {@code Lock} used for reading and writing.
-	 */
-	private ReadWriteLock lock;
+public abstract class TemplateRepository implements Repository<Key, Template> {
 	
 	/**
 	 * Holds the references to all {@code Template} that is 
@@ -38,15 +21,6 @@ public abstract class TemplateRepository extends Observable implements Repositor
 	 * object to define every {@code Template} instance.
 	 */
 	private volatile Map<Key, Template> repository;
-	
-	/**
-	 * Default Constructor. Initializes the lock with 
-	 * {@code ReentrantReadWriteLock} that uses 
-	 * {@linkplain ReentrantReadWriteLock#isFair() fair ordering policy}.
-	 */
-	public TemplateRepository() {
-		lock = new ReentrantReadWriteLock(true);
-	}
 	
 	/**
 	 * Replaces the content of this repository with {@code Template} instances from 
@@ -79,29 +53,6 @@ public abstract class TemplateRepository extends Observable implements Repositor
 		notNull(arg, "Key cannot be null");
 		state(repository != null, "Repository not yet initialized");
 		return repository.get(arg);
-	}
-	
-	/**
-	 * Returns the {@code Lock} used for reading.
-	 */
-	protected Lock readLock() {
-		return lock.readLock();
-	}
-	
-	/**
-	 * Returns the {@code Lock} used for writing.
-	 */
-	protected Lock writeLock() {
-		return lock.writeLock();
-	}
-	
-	/**
-	 * 
-	 * @param parser
-	 */
-	@Required
-	public void setParser(Parser<? extends Data> parser) {
-		this.parser = parser;
 	}
 	
 }

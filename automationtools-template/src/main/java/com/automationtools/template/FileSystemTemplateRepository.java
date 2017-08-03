@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Required;
 import com.automationtools.core.Data;
+import com.automationtools.parser.Parser;
 
 /**
  * The class {@code FileSystemTemplateRespository} is a concrete implementation
@@ -40,6 +41,11 @@ public class FileSystemTemplateRepository extends TemplateRepository {
 	private FileFilter filter;
 	
 	/**
+	 * 
+	 */
+	protected Parser<? extends Data> parser;
+	
+	/**
 	 * Loads all the {@code Template} instances from the {@linkplain #getSourceDirectory() source directory}.
 	 */
 	@Override
@@ -53,31 +59,26 @@ public class FileSystemTemplateRepository extends TemplateRepository {
 		
 		log.info("Initializing ...");
 		Map<Key, Template> templates = new HashMap<>();
-		readLock().lock();
-		try {
-			for(File templatefile : files) {
-				FileTemplateKey key = new FileTemplateKey(templatefile);
-				try {
-					/* Parse the raw data */
-					Data raw = parser.parse(Files.readAllBytes(templatefile.toPath()));
-					
-					/* Construct the template */
-					Template template = Template.wrap(raw);
-					template.setKey(key);
-					template.setSource(this);
-					Template replaced = templates.put(key, template);
-					if(replaced != null)
-						log.debug("Replaced {} [ Possible duplicate ]", replaced.getKey());
-					else
-						log.debug("Loaded {} as {}", templatefile.getName(), raw.getClass().getSimpleName());
-				} catch (Exception e) {
-					log.error("Error occurred while parsing file '" + templatefile.getName() + "'", e);
-				}
+		for(File templatefile : files) {
+			FileTemplateKey key = new FileTemplateKey(templatefile);
+			try {
+				/* Parse the raw data */
+				Data raw = parser.parse(Files.readAllBytes(templatefile.toPath()));
+				
+				/* Construct the template */
+				Template template = Template.wrap(raw);
+				template.setKey(key);
+				template.setSource(this);
+				Template replaced = templates.put(key, template);
+				if(replaced != null)
+					log.debug("Replaced {} [ Possible duplicate ]", replaced.getKey());
+				else
+					log.debug("Loaded {} as {}", templatefile.getName(), raw.getClass().getSimpleName());
+			} catch (Exception e) {
+				log.error("Error occurred while parsing file '" + templatefile.getName() + "'. Skipping ...", e);
 			}
-			return templates;
-		} finally {
-			readLock().unlock();
 		}
+		return templates;
 	}
 	
 	/**
@@ -85,20 +86,14 @@ public class FileSystemTemplateRepository extends TemplateRepository {
 	 */
 	@Override
 	public boolean delete(Template arg) throws Exception {
-		writeLock().lock();
-		try {
-			/* Delete the template file */
-			File f = ((FileTemplateKey) arg.getKey()).getTemplateFile();
-			boolean deleted = Files.deleteIfExists(f.toPath());
-			
-			if(deleted)
-				setChanged();
-			
-			return deleted;
-		} finally {
-			notifyObservers();
-			writeLock().unlock();
-		}
+		/* Delete the template file */
+		File f = ((FileTemplateKey) arg.getKey()).getTemplateFile();
+		boolean deleted = Files.deleteIfExists(f.toPath());
+		
+		if(deleted) 
+			reload();
+		
+		return deleted;
 	}
 
 	/**
@@ -106,19 +101,13 @@ public class FileSystemTemplateRepository extends TemplateRepository {
 	 */
 	@Override
 	public boolean update(Template arg) throws Exception {
-		writeLock().lock();
-		try {
-			/* Update the template file using the FileTemplateKey */
-			File f = ((FileTemplateKey) arg.getKey()).getTemplateFile();
-			Files.write(f.toPath(), arg.getData().getContent());
-			
-			/* Signifies file has been successfully updated */
-			setChanged();
-			return true;
-		} finally {
-			notifyObservers();
-			writeLock().unlock();
-		}
+		/* Update the template file using the FileTemplateKey */
+		File f = ((FileTemplateKey) arg.getKey()).getTemplateFile();
+		Files.write(f.toPath(), arg.getData().getContent());
+		
+		/* Signifies file has been successfully updated */
+		reload();
+		return true;
 	}
 	
 	/**
@@ -126,21 +115,15 @@ public class FileSystemTemplateRepository extends TemplateRepository {
 	 */
 	@Override
 	public Key create(String name, Template arg) throws Exception {
-		writeLock().lock();
-		try {
-			arg.setSource(this);
-			/* Create a text file -- default file format */
-			File f = new File(sourceDirectory, name + ".txt");
-			ensureFileExist(f);
-			writeByteArrayToFile(f, arg.getData().getContent());
-			FileTemplateKey key = new FileTemplateKey(f);
-			arg.setKey(key);
-			setChanged();
-			return key;
-		} finally {
-			notifyObservers();
-			writeLock().unlock();
-		}
+		arg.setSource(this);
+		/* Create a text file -- default file format */
+		File f = new File(sourceDirectory, name + ".txt");
+		ensureFileExist(f);
+		writeByteArrayToFile(f, arg.getData().getContent());
+		FileTemplateKey key = new FileTemplateKey(f);
+		arg.setKey(key);
+		reload();
+		return key;
 	}
 	
 	/**
@@ -180,6 +163,15 @@ public class FileSystemTemplateRepository extends TemplateRepository {
 	 */
 	public File getSourceDirectory() {
 		return sourceDirectory;
+	}
+	
+	/**
+	 * 
+	 * @param parser
+	 */
+	@Required
+	public void setParser(Parser<? extends Data> parser) {
+		this.parser = parser;
 	}
 	
 	/**

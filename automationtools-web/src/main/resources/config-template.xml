@@ -16,7 +16,7 @@
 	</beans:bean>
 	
 	<util:set id="templateSources">
-		<beans:bean class="com.automationtools.template.FileSystemTemplateRepository">
+		<beans:bean class="com.automationtools.template.FileSystemTemplateRepository" init-method="reload">
 			<beans:property name="sourceDirectory" value="${source.directory}"/>
 			<beans:property name="parser" ref="defaultParser"/>
 		</beans:bean>
