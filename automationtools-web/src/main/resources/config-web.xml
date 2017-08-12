@@ -3,16 +3,23 @@
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:security="http://www.springframework.org/schema/security"
 	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:util="http://www.springframework.org/schema/util"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
 		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 	
-	<beans:bean id="eventBus" class="reactor.bus.EventBus" factory-method="create">
-		<beans:constructor-arg>
-		</beans:constructor-arg>
-	</beans:bean>
+	<context:annotation-config />
+	<context:component-scan base-package="com.automationtools.services"/>
+	<context:property-placeholder location="classpath:/config/config.properties"/>
+	
+	<mvc:annotation-driven>
+		<mvc:message-converters>
+			<beans:bean class="org.springframework.http.converter.StringHttpMessageConverter"/>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
 	
 </beans:beans>
