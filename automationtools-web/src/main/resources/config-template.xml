@@ -11,7 +11,7 @@
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 	
 	
-	<beans:bean id="defaultTemplateRepository" class="com.automationtools.template.DefaultTemplateRepository" primary="true" init-method="reload">
+	<beans:bean id="defaultTemplateRepository" class="com.automationtools.template.DefaultTemplateRepository" primary="true" init-method="reload" lazy-init="true">
 		<beans:property name="sources" ref="templateSources"/>
 	</beans:bean>
 	
@@ -22,7 +22,7 @@
 		</beans:bean>
 	</util:set>
 	
-	<beans:bean id="defaultParser" class="com.automationtools.template.ChainedParser" factory-method="create">
+	<beans:bean id="defaultParser" class="com.automationtools.parser.ChainedParser" factory-method="create">
 		<beans:constructor-arg>
 			<beans:set>
 				<beans:bean class="com.automationtools.soapui.SoapuiDataParser"/>

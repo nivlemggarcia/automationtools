@@ -3,6 +3,10 @@ package com.automationtools.parser;
 import static org.springframework.util.Assert.*;
 import java.util.Arrays;
 import java.util.Iterator;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.automationtools.exception.ParsingFailedException;
 
 /**
@@ -12,6 +16,8 @@ import com.automationtools.exception.ParsingFailedException;
  */
 @SuppressWarnings("rawtypes")
 public class ChainedParser implements Parser {
+	
+	private static final Logger log = LoggerFactory.getLogger(ChainedParser.class);
 	
 	private Parser<?> wrapped;
 	
@@ -28,9 +34,10 @@ public class ChainedParser implements Parser {
 			Object parsed = wrapped.parse(arg);
 			return parsed == null ? next.parse(arg) : parsed;
 		} catch (Exception e) {
-			if(next != null)
+			if(next != null) {
+				log.error("Error occured while parsing. Skipping to next parser ...", e);
 				return next.parse(arg);
-			else
+			} else 
 				throw new ParsingFailedException("Could not find appropriate Parser");
 		}
 	}

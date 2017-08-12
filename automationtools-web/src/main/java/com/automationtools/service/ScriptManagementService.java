@@ -1,4 +1,4 @@
-package com.automationtools.services;
+package com.automationtools.service;
 
 import java.util.Collection;
 import javax.inject.Inject;

@@ -1,4 +1,4 @@
-package com.automationtools.services;
+package com.automationtools.service;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

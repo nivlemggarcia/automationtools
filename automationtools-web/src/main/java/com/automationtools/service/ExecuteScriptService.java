@@ -1,4 +1,4 @@
-package com.automationtools.services;
+package com.automationtools.service;
 
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
