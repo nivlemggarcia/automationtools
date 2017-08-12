@@ -57,6 +57,7 @@
 		<logback.version>1.2.3</logback.version>
 		<slf4j.version>1.7.25</slf4j.version>
 		<logback.ext.version>0.1.4</logback.ext.version>
+		<jul.slf4j.version>1.7.21</jul.slf4j.version>
 		<mysql.version>6.0.3</mysql.version>
 		<hikaricp.version>2.6.3</hikaricp.version>
 		<aspectj.version>1.8.9</aspectj.version>
@@ -77,6 +78,11 @@
 		<velocity.version>1.7</velocity.version>
 		<velocity.tools.version>2.0</velocity.tools.version>
 		<quartz.version>2.2.3</quartz.version>
+		<jsf.version>2.2.14</jsf.version>
+		<primefaces.version>6.1</primefaces.version>
+		<primefacesext.version>6.1.1</primefacesext.version>
+		<jstl.version>1.2</jstl.version>
+		<servlet.version>3.1.0</servlet.version>
 	</properties>
 	
 	<build>
@@ -221,6 +227,11 @@
 			    <groupId>org.logback-extensions</groupId>
 			    <artifactId>logback-ext-spring</artifactId>
 			    <version>${logback.ext.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>jul-to-slf4j</artifactId>
+				<version>${jul.slf4j.version}</version>
 			</dependency>
 			<!-- Database-related -->
 			<dependency>
@@ -556,6 +567,39 @@
 				<groupId>org.quartz-scheduler</groupId>
 				<artifactId>quartz-jobs</artifactId>
 				<version>${quartz.version}</version>
+			</dependency>
+			<!-- JSF -->
+			<dependency>
+				<groupId>com.sun.faces</groupId>
+				<artifactId>jsf-api</artifactId>
+				<version>${jsf.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.sun.faces</groupId>
+				<artifactId>jsf-impl</artifactId>
+				<version>${jsf.version}</version>
+			</dependency>
+			<!-- Primefaces -->
+			<dependency>
+				<groupId>org.primefaces</groupId>
+				<artifactId>primefaces</artifactId>
+				<version>${primefaces.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.primefaces.extensions</groupId>
+				<artifactId>primefaces-extensions</artifactId>
+				<version>${primefacesext.version}</version>
+			</dependency>
+			<!-- Servlet -->
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>jstl</artifactId>
+				<version>${jstl.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>javax.servlet-api</artifactId>
+				<version>${servlet.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
