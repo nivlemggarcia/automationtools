@@ -1,0 +1,37 @@
+/* 
+	This style sheet is primarily used by hlcr-layout.xhtml from the template folder
+*/
+* {
+	font-family: "Ubuntu-Light", "Helvetica", "Arial Unicode MS", sans-serif;;
+	font-size: 11px;
+	margin: 0;
+}
+
+a {
+	text-decoration: none;
+	outline: medium none;
+}
+
+html, body {
+	height: 100%;
+	margin: 3px !important;
+}
+
+body {
+	overflow-x: hidden;
+	overflow-y: auto;
+	height: 100%;
+	padding: 0px;
+}
+
+#header {
+	border: 0px !important;
+}
+
+#footer {
+	border: 0px !important;
+}
+
+#header, #center, #right, #left, #footer {
+	padding: 0px !important;
+}

@@ -13,6 +13,7 @@ import org.springframework.expression.ExpressionParser;
 import com.automationtools.exception.EvaluationFailedException;
 
 /**
+ * Provides support for evaluating operator/arithmetic/string expressions. 
  * 
  * @author 	Melvin Garcia
  * @since	1.0.0
@@ -30,6 +31,10 @@ public class ExpressionEvaluationSupport {
 	
 	private ExpressionParser parser;
 	
+	/**
+	 * The pattern that will be used to evaluate the expressions. 
+	 * Default value follow this pattern: <pre>${EXPRESSION}</pre>
+	 */
 	private String pattern = DEFAULT_PATTERN;
 	
 	public String evaluate(String toInspect, Map<String, String> parameters) {
@@ -144,10 +149,16 @@ public class ExpressionEvaluationSupport {
 		this.parser = parser;
 	}
 	
+	/**
+	 * Returns the pattern that is used to evaluate the expressions. 
+	 */
 	public String getPattern() {
 		return pattern;
 	}
 	
+	/**
+	 * Sets the pattern that will be used to evaluate the expressions. 
+	 */
 	public void setPattern(String pattern) {
 		notNull(pattern, "Expression pattern cannot be null");
 		state(!pattern.isEmpty(), "Pattern cannot be empty");

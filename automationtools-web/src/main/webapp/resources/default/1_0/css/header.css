@@ -1,0 +1,93 @@
+/* 
+	This style sheet is primarily used by header.xhtml from sections folder
+*/
+#headerForm\:LOGO img {
+ max-width: 70px;
+ max-height: 70px;
+ width: auto;
+ height: auto;
+}
+
+.topLinks img {
+ max-width: 30px;
+ max-height: 30px;
+ width: auto;
+ height: auto;
+}
+
+.topLinks {
+ font-family: "Berlin Sans FB", "Arial Narrow", Candara, "Century Gothic", Impact;
+ float: right;
+ margin-left: 10px;
+}
+
+.toplink-text {
+ vertical-align: middle;
+ text-align: right;
+ width: 100px;
+ height: 30px;
+ line-height: 30px;
+ margin-right: 20px;
+}
+
+#headerForm\:appsgrid.ui-panelgrid>*>tr, #headerForm\:appsgrid.ui-panelgrid .ui-panelgrid-cell {
+ border: none;
+ padding: 2px !important;
+}
+
+#headerForm\:appspanel div.ui-panel, #headerForm\:appspanel div.ui-panel-content {
+ padding: 0.2em 0em !important;
+}
+
+.applinks {
+ font-family: "Berlin Sans FB", "Arial Narrow", Candara, "Century Gothic", Impact;
+ display: inline-block;
+ border-radius: 5px;
+ text-align: center;
+ overflow: hidden;
+ padding: 5px;
+ transition: all 0.5s ease 0s;
+ float: right;
+ width: 80px;
+ cursor: pointer;
+ border: 1px solid white;
+}
+
+.applinks:hover {
+ border: 1px solid #BCC7CF;
+}
+
+.applinks img {
+ max-width: 50px;
+ max-height: 50px;
+ width: auto;
+ height: auto;
+}
+
+.ui-overlaypanel-content {
+ padding: 0px !important;
+}
+
+.btn {
+ color: black;
+ background-color: #ffce0a;
+ border-color: #ffce0a;
+ display: inline-block;
+ padding: 6px 12px;
+ margin-bottom: 0;
+ font-size: 12px;
+ font-weight: 600;
+ text-align: center;
+ white-space: nowrap;
+ vertical-align: middle;
+ cursor: pointer;
+ background-image: none;
+ border: 1px solid transparent;
+ border-radius: 4px;
+ transition: all .2s ease-in-out
+}
+
+.btn:hover {
+ color: white;
+ background-color: #000;
+}

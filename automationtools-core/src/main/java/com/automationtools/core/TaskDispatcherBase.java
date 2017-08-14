@@ -4,7 +4,6 @@ import static org.springframework.util.Assert.*;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 import org.springframework.beans.factory.annotation.Required;
-import com.automationtools.exception.NoSuitableHandlerFoundException;
 
 /**
  * 
@@ -39,7 +38,7 @@ public abstract class TaskDispatcherBase implements TaskDispatcher {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <T, R> Future<R> dispatch(Task<T> task) throws NoSuitableHandlerFoundException {
+	public <T, R> Future<R> dispatch(Task<T> task) {
 		notNull(task, "Cannot dispatch a null Task");
 		state(factory != null, "HandlerFactory cannot be null.");
 		
@@ -67,9 +66,10 @@ public abstract class TaskDispatcherBase implements TaskDispatcher {
 	
 	/**
 	 * 
-	 * @author Melvin Garcia
-	 * @since 1.0.0
-	 * @param <T>
+	 * @author 	Melvin Garcia
+	 * @since 	1.0.0
+	 * @param 	<T>
+	 * @param 	<R>
 	 */
 	class Command<T, R> implements Callable<R> {
 		

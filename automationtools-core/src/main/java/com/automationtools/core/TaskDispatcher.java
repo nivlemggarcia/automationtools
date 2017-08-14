@@ -1,7 +1,6 @@
 package com.automationtools.core;
 
 import java.util.concurrent.Future;
-import com.automationtools.exception.NoSuitableHandlerFoundException;
 
 /**
  * 
@@ -18,11 +17,7 @@ public interface TaskDispatcher {
 	 * {@code Dispatcher} implementation.
 	 * 
 	 * @param task {@code Task} subject for dispatch.
-	 * 
-	 * @throws NoSuitableHandlerFoundException
-	 * 			In a event that this {@code Dispatcher} could not
-	 * 			find suitable {@code TaskHandler} for the given {@code Task}.
 	 */
-	public <T, R> Future<R> dispatch(Task<T> task) throws NoSuitableHandlerFoundException;
+	public <T, R> Future<R> dispatch(Task<T> task);
 	
 }

@@ -7,9 +7,21 @@ import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Value;
 import com.automationtools.core.listener.AbstractTaskListener;
 
+/**
+ * Provides support for registering {@linkplain AbstractTaskListener task listeners}.
+ * These listeners will be registered as observers in the event when the {@code Task} 
+ * is submitted for {@linkplain TaskDispatcher#dispatch(Task) dispatch}. 
+ * 
+ * @author 	Melvin Garcia
+ * @since	1.0.0
+ */
 @Aspect
 public class TaskListenerSupport {
 	
+	/**
+	 * Flag that indicates whether to enable the registration of 
+	 * all the {@code AbstractTaskListener}.
+	 */
 	@Value("${core.tasklistener.enable}")
 	private boolean enabled;
 	

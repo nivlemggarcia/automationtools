@@ -4,15 +4,20 @@ import java.io.File;
 import java.io.IOException;
 
 /**
+ * A utility class for {@code File}-related operations.
  * 
- * @author Melvin Garcia
- * @since 1.0.0
+ * @author 	Melvin Garcia
+ * @since 	1.0.0
  */
 public final class FileUtilities {
 
 	private FileUtilities() {
 	}
 	
+	/**
+	 * A convenience method that will ensure all the 
+	 * folder/s specified as argument exist. 
+	 */
 	public static void ensureFolderExist(File ... files) {
 		for (File file : files) {
 			if(file.exists())
@@ -24,6 +29,10 @@ public final class FileUtilities {
 		}
 	}
 	
+	/**
+	 * A convenience method that will ensure all the 
+	 * file/s specified as argument exist. 
+	 */
 	public static void ensureFileExist(File ... files) throws IOException {
 		for (File file : files) {
 			if(file.exists())

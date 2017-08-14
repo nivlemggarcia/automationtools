@@ -4,6 +4,14 @@ import java.util.Map;
 import java.util.Properties;
 
 /**
+ * A generic representation of a type of data 
+ * which is characterized by a set of properties.
+ * 
+ * <p>
+ * {@code ParameterizedData} acts as a wrapper of 
+ * {@code Data} and could be used by:
+ * <pre>Data d = ParameterizedData.create(Data.create(...));</pre>
+ * </p>
  * 
  * @author 	Melvin Garcia
  * @since 	1.0.0

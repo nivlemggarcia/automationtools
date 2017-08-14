@@ -12,7 +12,7 @@ package com.automationtools.exception;
  * propagate outside the method or constructor boundary.
  * 
  * @author 	Melvin Garcia
- * @since	v.1.0
+ * @since	1.0.0
  */
 public class InitializationFailedException extends RuntimeException {
 	

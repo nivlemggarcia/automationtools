@@ -18,6 +18,8 @@ import com.eviware.soapui.model.testsuite.TestSuite;
  */
 public class SoapuiTemplateView extends TemplateView {
 	
+	// TODO: Implement onUpdate from UI.
+	
 	/**
 	 * {@code Data} that the wrapped {@code Template} holds.
 	 */

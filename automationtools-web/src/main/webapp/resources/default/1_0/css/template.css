@@ -1,0 +1,68 @@
+/* 
+	This style sheet is primarily used by template.xhtml from template folder
+*/
+* {
+ font-family: SprintSansWeb, "Helvetica", "Arial Unicode MS", sans-serif;
+ font-size: 11px;
+ margin: 0;
+}
+
+a {
+ text-decoration: none;
+ outline: medium none;
+}
+
+html, body {
+ height: 100%;
+}
+
+body {
+ font-family: SprintSansWeb, "Helvetica", "Arial Unicode MS", sans-serif;
+ font-size: 11px;
+ overflow-x: hidden;
+ overflow-y: auto;
+ height: 100%;
+ padding: 0px;
+}
+
+/* Main content wrapper */
+#container {
+ min-height: 100%;
+ height: auto !important;
+ /* This line and the next line are not necessary unless you need IE6 support */
+ height: 100%;
+ margin: 0 auto -15px;
+ /* the bottom margin is the negative value of the footer's height */
+ width: 100%;
+}
+
+#header {
+ position: fixed;
+ top: 0;
+ left: 0;
+ right: 0;
+ height: 50px;
+ border-bottom: 1px solid #BCC7CF;
+}
+
+#content {
+ position: fixed;
+ top: 51px;
+ bottom: 0;
+ left: 0;
+ right: 0;
+ overflow: hidden;
+}
+
+#footer {
+ position: fixed;
+ bottom: 0;
+ left: 0;
+ right: 0;
+ height: 100px;
+ border-top: 15px solid #FFCE0A;
+ color: #666;
+ padding: 0.5em 0 0.5em 0;
+ text-align: center;
+ height: 15px;
+}
