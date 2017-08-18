@@ -4,7 +4,6 @@ import java.util.Set;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.springframework.beans.factory.annotation.Value;
 
 /**
  * Provides support for registering {@linkplain TaskObserver task observers}.
@@ -21,7 +20,6 @@ public class TaskObserverSupport {
 	 * Flag that indicates whether to enable the registration of 
 	 * all the {@code TaskObserver}s.
 	 */
-	@Value("${core.tasklistener.enable}")
 	private boolean enabled;
 	
 	/**
