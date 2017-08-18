@@ -11,8 +11,8 @@ import org.quartz.ScheduleBuilder;
  * @see WeeklySchedule
  * @see MonthlySchedule
  * 
- * @author Melvin Garcia
- * @since v.1.0
+ * @author 	Melvin Garcia
+ * @since 	1.0.0
  */
 public interface Schedule extends Serializable, DataModel<ScheduleBuilder<?>> {
 	

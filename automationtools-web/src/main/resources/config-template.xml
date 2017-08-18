@@ -22,7 +22,7 @@
 		</beans:bean>
 	</util:set>
 	
-	<beans:bean id="defaultParser" class="com.automationtools.parser.ChainedParser" factory-method="create">
+	<beans:bean id="defaultParser" class="com.automationtools.parser.ChainedParser" factory-method="create" primary="true">
 		<beans:constructor-arg>
 			<beans:set>
 				<beans:bean class="com.automationtools.soapui.SoapuiDataParser"/>

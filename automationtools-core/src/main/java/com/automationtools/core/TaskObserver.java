@@ -1,15 +1,14 @@
-package com.automationtools.core.listener;
+package com.automationtools.core;
 
 import java.util.Observer;
 
-import com.automationtools.core.Task;
-
 /**
+ * {@code TaskObserver} observes the changes in {@code Task} objects.
  * 
  * @author 	Melvin Garcia
  * @since	1.0.0
  */
-public abstract class AbstractTaskListener implements Observer {
+public abstract class TaskObserver implements Observer {
 	
 	/**
 	 * Start observing to the specified {@code Task}.

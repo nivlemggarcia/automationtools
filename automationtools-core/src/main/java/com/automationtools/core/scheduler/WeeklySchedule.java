@@ -11,8 +11,8 @@ import org.quartz.ScheduleBuilder;
 /**
  * Implementation of {@link Schedule} for scheduling on a weekly-basis.
  * 
- * @author Melvin Garcia
- * @since v.1.0
+ * @author 	Melvin Garcia
+ * @since 	1.0.0
  */
 public class WeeklySchedule implements Schedule {
 
@@ -89,6 +89,9 @@ public class WeeklySchedule implements Schedule {
 	 */
 	private Date time;
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public ScheduleBuilder<?> build() {
 		/* Enabled Days of the week */
@@ -129,58 +132,100 @@ public class WeeklySchedule implements Schedule {
 					String.valueOf(c.get(Calendar.HOUR_OF_DAY)), "?", "*", buf.toString(), "*"));
 	}
 
+	/**
+	 * Returns <em>true</em> if scheduled every Monday, otherwise false.
+	 */
 	public boolean isMonday() {
 		return monday;
 	}
 
+	/**
+	 * Sets the flag for scheduling every Monday
+	 */
 	public void setMonday(boolean monday) {
 		this.monday = monday;
 	}
 
+	/**
+	 * Returns <em>true</em> if scheduled every Tuesday, otherwise false.
+	 */
 	public boolean isTuesday() {
 		return tuesday;
 	}
 
+	/**
+	 * Sets the flag for scheduling every Tuesday
+	 */
 	public void setTuesday(boolean tuesday) {
 		this.tuesday = tuesday;
 	}
 
+	/**
+	 * Returns <em>true</em> if scheduled every Wednesday, otherwise false.
+	 */
 	public boolean isWednesday() {
 		return wednesday;
 	}
 
+	/**
+	 * Sets the flag for scheduling every Wednesday
+	 */
 	public void setWednesday(boolean wednesday) {
 		this.wednesday = wednesday;
 	}
 
+	/**
+	 * Returns <em>true</em> if scheduled every Thursday, otherwise false.
+	 */
 	public boolean isThursday() {
 		return thursday;
 	}
 
+	/**
+	 * Sets the flag for scheduling every Thursday
+	 */
 	public void setThursday(boolean thursday) {
 		this.thursday = thursday;
 	}
 
+	/**
+	 * Returns <em>true</em> if scheduled every Friday, otherwise false.
+	 */
 	public boolean isFriday() {
 		return friday;
 	}
 
+	/**
+	 * Sets the flag for scheduling every Friday
+	 */
 	public void setFriday(boolean friday) {
 		this.friday = friday;
 	}
 
+	/**
+	 * Returns <em>true</em> if scheduled every Saturday, otherwise false.
+	 */
 	public boolean isSaturday() {
 		return saturday;
 	}
 
+	/**
+	 * Sets the flag for scheduling every Saturday
+	 */
 	public void setSaturday(boolean saturday) {
 		this.saturday = saturday;
 	}
 
+	/**
+	 * Returns <em>true</em> if scheduled every Sunday, otherwise false.
+	 */
 	public boolean isSunday() {
 		return sunday;
 	}
 
+	/**
+	 * Sets the flag for scheduling every Sunday
+	 */
 	public void setSunday(boolean sunday) {
 		this.sunday = sunday;
 	}

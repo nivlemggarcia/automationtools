@@ -45,7 +45,10 @@ public final class SystemProperties {
 	 */
 	public static File getAsFile(String key) {
 		notNull(key, "System property key cannot be null");
-		return new File(System.getProperty(key));
+		if(getAsString(key) == null)
+			throw new NullPointerException("Property value cannot be found: " + key);
+		
+		return new File(getAsString(key));
 	}
 	
 	/**
@@ -85,7 +88,7 @@ public final class SystemProperties {
 	 */
 	public static Integer getAsInteger(String key) {
 		notNull(key, "System property key cannot be null");
-		return Integer.parseInt(System.getProperty(key));
+		return Integer.parseInt(getAsString(key));
 	}
 	
 	/**
@@ -106,7 +109,7 @@ public final class SystemProperties {
 	 */
 	public static Double getAsDouble(String key) {
 		notNull(key, "System property key cannot be null");
-		return Double.parseDouble(System.getProperty(key));
+		return Double.parseDouble(getAsString(key));
 	}
 	
 	/**
@@ -149,7 +152,7 @@ public final class SystemProperties {
 	 */
 	public static DateFormat getAsDateFormat(String key) {
 		notNull(key, "System property key cannot be null");
-		return new SimpleDateFormat(System.getProperty(key));
+		return new SimpleDateFormat(getAsString(key));
 	}
 	
 	/**
@@ -171,7 +174,7 @@ public final class SystemProperties {
 	 */
 	public static Class<?> getAsClass(String key) throws ClassNotFoundException {
 		notNull(key, "System property key cannot be null");
-		return Class.forName(System.getProperty(key));
+		return Class.forName(getAsString(key));
 	}
 	
 	/**

@@ -5,10 +5,10 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
+ * A {@code ExpressionEvaluator} that evaluates <tt>SYSDATE</tt> expression.
  * 
- * 
- * @author Melvin Garcia
- * @since v.3.0
+ * @author 	Melvin Garcia
+ * @since 	1.0.0
  */
 public class SysdateExpressionEvaluator implements ExpressionEvaluator {
 	

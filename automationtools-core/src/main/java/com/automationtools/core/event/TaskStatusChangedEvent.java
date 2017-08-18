@@ -1,13 +1,14 @@
-package com.automationtools.core.listener;
+package com.automationtools.core.event;
 
 import java.util.UUID;
 
 import com.automationtools.core.Status;
 import com.automationtools.core.Task;
+import com.automationtools.core.TaskStatusObserver;
 
 /**
  * {@code TaskStatusChangedEvent} a event-type object that 
- * is fired by the {@linkplain TaskStatusListener} whenever 
+ * is fired by the {@linkplain TaskStatusObserver} whenever 
  * a change in {@code Status} in any of the {@code Task}s 
  * has been observed.
  * 

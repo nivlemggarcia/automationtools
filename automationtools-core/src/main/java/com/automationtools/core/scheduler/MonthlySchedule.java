@@ -5,8 +5,8 @@ import org.quartz.ScheduleBuilder;
 /**
  * Implementation of {@link Schedule} for scheduling on a monthly-basis.
  * 
- * @author Melvin Garcia
- * @since v.1.0
+ * @author 	Melvin Garcia
+ * @since 	1.0.0
  */
 public class MonthlySchedule implements Schedule {
 

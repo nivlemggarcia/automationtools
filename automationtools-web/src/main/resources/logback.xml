@@ -12,7 +12,7 @@
 	<appender name="id.sifting.file" class="ch.qos.logback.classic.sift.SiftingAppender">
 		<discriminator>
 			<key>id</key>
-			<defaultValue>unknown</defaultValue>
+			<defaultValue>transactions</defaultValue>
 		</discriminator>
 	
 		<sift>
@@ -28,7 +28,7 @@
 	<appender name="id.sifting.db" class="ch.qos.logback.classic.sift.SiftingAppender">
 		<discriminator>
 			<key>id</key>
-			<defaultValue>unknown</defaultValue>
+			<defaultValue>transactions</defaultValue>
 		</discriminator>
 
 		<sift>

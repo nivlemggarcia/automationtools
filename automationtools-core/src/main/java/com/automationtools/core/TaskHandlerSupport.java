@@ -2,22 +2,22 @@ package com.automationtools.core;
 
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.concurrent.TimeUnit.MINUTES;
+import javax.inject.Named;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 
 /**
  * This aspect intercepts {@linkplain TaskHandler#apply(Task)} 
  * and does all the default logging and {@code Task}'s 
  * {@linkplain Task#setStatus(Status) status manipulations}.
  * 
- * @author Melvin Garcia
- * @since 1.0.0
+ * @author 	Melvin Garcia
+ * @since 	1.0.0
  */
-@Component
+@Named
 @Aspect
 public class TaskHandlerSupport {
 	

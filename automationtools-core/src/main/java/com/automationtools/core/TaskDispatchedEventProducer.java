@@ -1,63 +1,63 @@
 package com.automationtools.core;
 
-import java.util.Set;
+import java.util.concurrent.Future;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.springframework.beans.factory.annotation.Value;
-import com.automationtools.core.listener.AbstractTaskListener;
+import org.springframework.beans.factory.annotation.Required;
+
+import com.automationtools.core.event.TaskDispatchedEvent;
+
+import reactor.bus.Event;
+import reactor.bus.EventBus;
 
 /**
- * Provides support for registering {@linkplain AbstractTaskListener task listeners}.
- * These listeners will be registered as observers in the event when the {@code Task} 
- * is submitted for {@linkplain TaskDispatcher#dispatch(Task) dispatch}. 
+ * Broadcasts the event {@code TaskDispatchedEvent} in the event that
+ * a {@code Task} was dispatched by the {@code TaskDispatcher}. 
+ * 
+ * <p>
+ * Reactor's {@code EventBus} is utilized here to accept the event and 
+ * notify all the registered {@code TaskDispatchedEvent} {@code Consumer}s
+ * in a <em>fire-and-forget</em> manner.
+ * </p>
  * 
  * @author 	Melvin Garcia
  * @since	1.0.0
  */
 @Aspect
-public class TaskListenerSupport {
+public class TaskDispatchedEventProducer {
 	
 	/**
-	 * Flag that indicates whether to enable the registration of 
-	 * all the {@code AbstractTaskListener}.
+	 * The reactor event gateway used for broadcasting events.
 	 */
-	@Value("${core.tasklistener.enable}")
-	private boolean enabled;
+	private EventBus eventBus;
 	
 	/**
-	 * Change listeners for the dispatched {@code Task}s.
+	 * Intercepts {@linkplain TaskDispatcher#dispatch(Task)} to 
+	 * fire {@code TaskDispatchedEvent}.
+	 * 
+	 * @param task			The referenced task
 	 */
-	private Set<AbstractTaskListener> taskObservers;
-	
 	@Around("execution(* com.automationtools.core.TaskDispatcher+.dispatch(..)) && args(task)")
-	public Object around(ProceedingJoinPoint pjp, Task<?> task) throws Throwable {
-		if(enabled && hasObservers())
-			/* Start listening to Task events */
-			taskObservers.forEach((o) -> o.registerTo(task));
-			
-		return pjp.proceed();
+	public Object beforeDispatch(ProceedingJoinPoint pjp, Task<?> task) throws Throwable {
+		Object returnObj = pjp.proceed();
+		eventBus.notify(TaskDispatchedEvent.class, Event.wrap(new TaskDispatchedEvent(task, (Future<?>) returnObj)));
+		return returnObj;
 	}
 	
 	/**
-	 * Sets the listeners for the dispatched {@code Task}s.
+	 * Sets the reactor event gateway used for broadcasting events.
 	 */
-	public void setTaskObservers(Set<AbstractTaskListener> taskObservers) {
-		this.taskObservers = taskObservers;
+	@Required
+	public void setEventBus(EventBus eventBus) {
+		this.eventBus = eventBus;
 	}
 	
 	/**
-	 * Returns the listeners for the dispatched {@code Task}s.
+	 * Returns the reactor event gateway used for broadcasting events.
 	 */
-	public Set<AbstractTaskListener> getTaskObservers() {
-		return taskObservers;
-	}
-	
-	/**
-	 * Checks if there are {@code Task} {@code Observers}.
-	 */
-	protected boolean hasObservers() {
-		return taskObservers != null && !taskObservers.isEmpty();
+	public EventBus getEventBus() {
+		return eventBus;
 	}
 	
 }
