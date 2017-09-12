@@ -15,8 +15,8 @@
 		<module>automationtools-soapui</module>
 		<module>automationtools-selenium</module>
 		<module>automationtools-ssh</module>
-    <module>automationtools-web</module>
-  </modules>
+    	<module>automationtools-web</module>
+  	</modules>
 	
 	<developers>
 		<developer>
@@ -42,6 +42,12 @@
 		<repository>
 			<id>soapUI</id>
 			<url>http://smartbearsoftware.com/repository/maven2/</url>
+		</repository>
+
+		<repository>
+			<id>prime-repo</id>
+			<name>Prime Repo</name>
+			<url>https://repository.primefaces.org</url>
 		</repository>
 	</repositories>
 	
@@ -80,6 +86,7 @@
 		<quartz.version>2.2.3</quartz.version>
 		<jsf.version>2.2.14</jsf.version>
 		<primefaces.version>6.1</primefaces.version>
+		<pftheme.version>1.0.10</pftheme.version>
 		<primefacesext.version>6.1.1</primefacesext.version>
 		<jstl.version>1.2</jstl.version>
 		<servlet.version>3.1.0</servlet.version>
@@ -584,6 +591,11 @@
 				<groupId>org.primefaces</groupId>
 				<artifactId>primefaces</artifactId>
 				<version>${primefaces.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.primefaces.themes</groupId>
+				<artifactId>bootstrap</artifactId>
+				<version>${pftheme.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.primefaces.extensions</groupId>

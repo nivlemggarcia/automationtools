@@ -1,7 +1,6 @@
 package com.automationtools.core;
 
 import static org.springframework.util.Assert.*;
-import java.util.Observable;
 import java.util.UUID;
 import com.automationtools.util.CreateUuid;
 
@@ -14,7 +13,7 @@ import com.automationtools.util.CreateUuid;
  *
  * @param <T> The type of the wrapped object.
  */
-public class Task<T> extends Observable {
+public class Task<T> {
 	
 	/**
 	 * Unique identifier for this {@code Task}.
@@ -72,12 +71,7 @@ public class Task<T> extends Observable {
 	 * Sets the execution status.
 	 */
 	protected void setStatus(Status status) {
-		Status oldStatus = this.status;
 		this.status = status;
-		setChanged();
-		
-		/* Notify listeners as soon as state is changed */
-		notifyObservers(oldStatus);
 	}
 
 	/**

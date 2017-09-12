@@ -2,12 +2,20 @@ package com.automationtools.core;
 
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.concurrent.TimeUnit.MINUTES;
+
+import javax.inject.Inject;
 import javax.inject.Named;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.automationtools.core.event.task.TaskExecutionEndedEvent;
+import com.automationtools.core.event.task.TaskExecutionStartedEvent;
+
+import reactor.bus.Event;
+import reactor.bus.EventBus;
 
 /**
  * This aspect intercepts {@linkplain TaskHandler#apply(Task)} 
@@ -23,6 +31,12 @@ public class TaskHandlerSupport {
 	
 	private static final Logger log = LoggerFactory.getLogger(TaskHandlerSupport.class);
 	
+	/**
+	 * The reactor event gateway used for broadcasting events.
+	 */
+	@Inject
+	private EventBus eventBus;
+	
 	@Around("execution(* com.automationtools.core.TaskHandler+.apply(..)) && args(arg)")
 	public Object around(ProceedingJoinPoint pjp, Task<?> arg) throws Throwable {
 		log.info("Execution Started [{}]", arg.getId().toString());
@@ -31,6 +45,9 @@ public class TaskHandlerSupport {
 		timer.start();
 		
 		try {
+			/* Notify observers */
+			eventBus.notify(TaskExecutionStartedEvent.class, Event.wrap(new TaskExecutionStartedEvent(arg)));
+			/* Execute */
 			arg.setStatus(Status.Default.IN_PROGRESS);
 			Object result = pjp.proceed();
 			arg.setStatus(Status.Default.SUCCESSFUL);
@@ -40,6 +57,8 @@ public class TaskHandlerSupport {
 			arg.setFailureCause(e);
 			throw e;
 		} finally {
+			/* Notify observers */
+			eventBus.notify(TaskExecutionEndedEvent.class, Event.wrap(new TaskExecutionEndedEvent(arg)));
 			timer.stop();
 			
 			/* Compute time taken to execute */
@@ -71,13 +90,15 @@ public class TaskHandlerSupport {
 		private long stopTime = 0;
 		private long elapsedTime = 0;
 		
-		public void start() {
+		public long start() {
 			startTime = System.currentTimeMillis();
+			return startTime;
 		}
 
-		public void stop() {
+		public long stop() {
 			stopTime = System.currentTimeMillis();
 			updateElapsedTime();
+			return stopTime;
 		}
 
 		public long getStartTime() {
