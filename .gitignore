@@ -13,6 +13,8 @@
 *.rar
 
 # eclipse #
+build/
+bin/
 target/
 .settings/
 .project
